@@ -11,7 +11,7 @@ const authService = {
     },
     async code(userData) {
         try {
-            const {status, data} = await axios.post(API_ENDPOINT + '/auth/code', userData);
+            const {status, data} = await axios.post(API_ENDPOINT + '/auth/admin-code', userData);
             if (status === 200) {
                 return true;
             }
@@ -22,7 +22,7 @@ const authService = {
     },
     async login(userData) {
         try {
-            const {status, data} = await axios.post(API_ENDPOINT + '/auth/login', userData);
+            const {status, data} = await axios.post(API_ENDPOINT + '/auth/admin-login', userData);
             if (status === 200) {
                 setCookie('ACCESS_TOKEN', data.data.token, 3000000);
                 setCookie('PHONE', data.data.user.phone, 3000000);
