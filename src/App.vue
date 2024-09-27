@@ -7,6 +7,7 @@ import {getCookie} from "@/utils/helpers/cookies.helper";
 
 export default {
   async mounted(){
+    window.location.reload(true);
     if (!getCookie('ACCESS_TOKEN')){
       this.$router.push('/auth');
     }
