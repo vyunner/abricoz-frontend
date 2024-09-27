@@ -53,12 +53,14 @@ export default {
               label: 'Сотрудники',
               command: () => {
                 this.$router.push('/user/get-users-with-roles');
+                this.menuVisible = false;
               }
             },
             {
               label: 'Выдача ролей',
               command: () => {
                 this.$router.push('/user/set-roles');
+                this.menuVisible = false;
               }
             },
           ]
@@ -71,6 +73,7 @@ export default {
               label: 'Заполнение товаров',
               command: () => {
                 this.$router.push('/warehouse/fill');
+                this.menuVisible = false;
               }
             },
           ]
