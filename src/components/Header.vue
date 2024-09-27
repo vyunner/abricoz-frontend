@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {getCookie} from "@/utils/helpers/cookies.helper";
+import { getCookie } from "@/utils/helpers/cookies.helper";
 import authService from "@/services/auth.service";
 
 export default {
@@ -31,31 +31,51 @@ export default {
         icon: 'pi pi-user',
         label: `${getCookie('ROLE')}: ${getCookie('LOGIN')}`,
         items: [
-          // {
-          //   label: 'Мой профиль',
-          //   icon: 'pi pi-user',
-          //   to: '/profile',
-          // },
           {
             label: 'Выход',
             icon: 'pi pi-fw pi-power-off',
-            command: (event) => {
+            command: () => {
               authService.logout();
             }
           }
         ]
       }],
-      menuItems: [
+    };
+  },
+  computed: {
+    menuItems() {
+      return [
+        {
+          label: 'Пользователи',
+          icon: 'pi pi-file',
+          items: [
+            {
+              label: 'Сотрудники',
+              command: () => {
+                this.$router.push('/user/get-users-with-roles');
+              }
+            },
+            {
+              label: 'Выдача ролей',
+              command: () => {
+                this.$router.push('/user/set-roles');
+              }
+            },
+          ]
+        },
         {
           label: 'Склад',
           icon: 'pi pi-file',
           items: [
             {
               label: 'Заполнение товаров',
+              command: () => {
+                this.$router.push('/warehouse/fill');
+              }
             },
           ]
         }
-      ],
+      ];
     }
   },
   methods: {
@@ -63,7 +83,7 @@ export default {
       this.$refs.menu.toggle(event);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

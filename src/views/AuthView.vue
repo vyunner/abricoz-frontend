@@ -24,10 +24,9 @@
 
 <script>
 import authService from "@/services/auth.service";
-import teamService from "@/services/team.service";
-import axios from "axios";
 
 export default {
+  name: "AuthView",
   data() {
     return {
       loading: false,

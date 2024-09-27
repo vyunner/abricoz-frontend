@@ -1,18 +1,6 @@
 <template>
   <Header />
-  <div class="container">
-    <div class="row">
-      <div class="col-4">
-        <div class="blue" />
-      </div>
-      <div class="col-2">
-        <div class="black" />
-      </div>
-      <div class="col-12">
-        <div class="red" />
-      </div>
-    </div>
-  </div>
+  <router-view />
 </template>
 
 <script>

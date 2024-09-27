@@ -24,6 +24,12 @@ import Toast from 'primevue/toast';
 import ToastService from "primevue/toastservice";
 import PanelMenu from "primevue/panelmenu";
 
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';                   // optional
+
+
 const app = createApp(App);
 
 app.use(router);
@@ -44,5 +50,9 @@ app.component('Checkbox', Checkbox)
 app.component('Dropdown', Dropdown)
 app.component('Toast', Toast)
 app.component('PanelMenu', PanelMenu)
+app.component('DataTable', DataTable)
+app.component('Column', Column)
+app.component('ColumnGroup', ColumnGroup)
+app.component('Row', Row)
 
 app.mount('#app');
