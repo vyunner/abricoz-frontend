@@ -45,7 +45,7 @@ export default {
       }
       else {
         this.postData.user_id = null;
-        this.postData.role_ids = null;
+        this.postData.role_ids = [];
         this.user = null;
 
         this.$toast.add({

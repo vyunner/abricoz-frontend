@@ -16,12 +16,14 @@ const userService = {
     },
     async getUser(phone) {
         try {
-            const {status, data} = await httpClient.get('admin/get-user?phone=' + phone);
+            // Encode the phone number to handle special characters like +
+            const encodedPhone = encodeURIComponent(phone);
+            const {status, data} = await httpClient.get(`admin/get-user?phone=${encodedPhone}`);
             if (status === 200) {
                 return data.data;
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
             return false;
         }
     },
