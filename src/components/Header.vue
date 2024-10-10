@@ -66,6 +66,26 @@ export default {
           ]
         },
         {
+          label: 'Диспетчер',
+          icon: 'pi pi-file',
+          items: [
+            {
+              label: 'Прикрепить заказы',
+              command: () => {
+                this.$router.push('/dispatcher/assign-orders');
+                this.menuVisible = false;
+              }
+            },
+            {
+              label: 'Открепить заказы',
+              command: () => {
+                this.$router.push('/dispatcher/unassign-orders');
+                this.menuVisible = false;
+              }
+            },
+          ]
+        },
+        {
           label: 'Склад',
           icon: 'pi pi-file',
           items: [
@@ -77,7 +97,7 @@ export default {
               }
             },
           ]
-        }
+        },
       ];
     }
   },

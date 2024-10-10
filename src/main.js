@@ -23,6 +23,7 @@ import Dropdown from "primevue/dropdown";
 import Toast from 'primevue/toast';
 import ToastService from "primevue/toastservice";
 import PanelMenu from "primevue/panelmenu";
+import Dialog from 'primevue/dialog';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -54,5 +55,6 @@ app.component('DataTable', DataTable)
 app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
+app.component('Dialog', Dialog)
 
 app.mount('#app');

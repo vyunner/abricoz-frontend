@@ -17,6 +17,16 @@ const routes = [
                 name: 'user/set-roles',
                 component: () => import('@/views/User/UserSetRolesView.vue'),
             },
+            {
+                path: 'dispatcher/assign-orders',
+                name: 'dispatcher/assign-orders',
+                component: () => import('@/views/Dispatcher/DispatcherAssignOrdersView.vue'),
+            },
+            {
+                path: 'dispatcher/unassign-orders',
+                name: 'dispatcher/unassign-orders',
+                component: () => import('@/views/Dispatcher/DispatcherUnassignOrdersView.vue'),
+            },
         ]
     },
     {
