@@ -27,6 +27,11 @@ const routes = [
                 name: 'dispatcher/unassign-orders',
                 component: () => import('@/views/Dispatcher/DispatcherUnassignOrdersView.vue'),
             },
+            {
+                path: 'warehouse/fill',
+                name: 'warehouse/fill',
+                component: () => import('@/views/Warehouse/WarehouseFillView.vue'),
+            },
         ]
     },
     {

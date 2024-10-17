@@ -24,6 +24,9 @@ import Toast from 'primevue/toast';
 import ToastService from "primevue/toastservice";
 import PanelMenu from "primevue/panelmenu";
 import Dialog from 'primevue/dialog';
+import Image from 'primevue/image';
+import AutoComplete from 'primevue/autocomplete';
+import InputNumber from 'primevue/inputnumber';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -46,6 +49,7 @@ app.component('Menubar', Menubar)
 app.component('Sidebar', Sidebar)
 app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
+app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
 app.component('Checkbox', Checkbox)
 app.component('Dropdown', Dropdown)
@@ -56,5 +60,7 @@ app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
 app.component('Dialog', Dialog)
+app.component('Image', Image)
+app.component('AutoComplete', AutoComplete)
 
 app.mount('#app');
