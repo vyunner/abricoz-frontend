@@ -3,8 +3,8 @@ import httpClient from "./http.service";
 const warehouseService = {
     async search(name) {
         try {
-            const { status, data } = await httpClient.get(`/warehouse/search`, {
-                params: { name }
+            const {status, data} = await httpClient.get(`/warehouse/search`, {
+                params: {name}
             });
             if (status === 200) {
                 return data.data;
@@ -16,10 +16,8 @@ const warehouseService = {
     },
     async createProduct(productData) {
         try {
-            const { status, data } = await httpClient.post(`/warehouse/create-product`, productData);
-            if (status === 200) {
-                return data.data;
-            }
+            const {status, data} = await httpClient.post(`/warehouse/create-product`, productData);
+            return status === 200;
         } catch (e) {
             console.error(e);
             return false;
@@ -27,7 +25,7 @@ const warehouseService = {
     },
     async getProducts() {
         try {
-            const { status, data } = await httpClient.get(`/warehouse/get-products`);
+            const {status, data} = await httpClient.get(`/warehouse/get-products`);
             if (status === 200) {
                 return data.data;
             }
@@ -38,10 +36,8 @@ const warehouseService = {
     },
     async updateProduct(id, productData) {
         try {
-            const { status, data } = await httpClient.put(`/warehouse/update-product/${id}`, productData);
-            if (status === 200) {
-                return data.data;
-            }
+            const {status, data} = await httpClient.put(`/warehouse/update-product/${id}`, productData);
+            return status === 200;
         } catch (e) {
             console.error(e);
             return false;
@@ -49,7 +45,7 @@ const warehouseService = {
     },
     async deleteProduct(id) {
         try {
-            const { status } = await httpClient.delete(`/warehouse/delete-product/${id}`);
+            const {status} = await httpClient.delete(`/warehouse/delete-product/${id}`);
             if (status === 200) {
                 return true;
             }
@@ -60,7 +56,7 @@ const warehouseService = {
     },
     async getSubcategories() {
         try {
-            const { status, data } = await httpClient.get(`/warehouse/get-subcategories`);
+            const {status, data} = await httpClient.get(`/warehouse/get-subcategories`);
             if (status === 200) {
                 return data.data;
             }
@@ -71,8 +67,8 @@ const warehouseService = {
     },
     async getBrands(query) {
         try {
-            const { status, data } = await httpClient.get(`/warehouse/get-brands`, {
-                params: { search: query }
+            const {status, data} = await httpClient.get(`/warehouse/get-brands`, {
+                params: {search: query}
             });
             if (status === 200) {
                 return data.data;
@@ -84,8 +80,8 @@ const warehouseService = {
     },
     async getCountries(query) {
         try {
-            const { status, data } = await httpClient.get(`/warehouse/get-countries`, {
-                params: { search: query }
+            const {status, data} = await httpClient.get(`/warehouse/get-countries`, {
+                params: {search: query}
             });
             if (status === 200) {
                 return data.data;
@@ -95,7 +91,15 @@ const warehouseService = {
             return [];
         }
     },
-    // Добавьте методы для категорий, если необходимо
+    async addPhotoProduct(formData, id) {
+        try {
+            const {status} = await httpClient.post(`/warehouse/add-photo-product/${id}`, formData)
+            return status === 200;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    },
 };
 
 export default warehouseService;

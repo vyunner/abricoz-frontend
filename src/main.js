@@ -27,6 +27,9 @@ import Dialog from 'primevue/dialog';
 import Image from 'primevue/image';
 import AutoComplete from 'primevue/autocomplete';
 import InputNumber from 'primevue/inputnumber';
+import ToggleButton from 'primevue/togglebutton';
+import TextArea from 'primevue/textarea';
+import FileUpload from 'primevue/fileupload';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -51,6 +54,7 @@ app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
+app.component('TextArea', TextArea)
 app.component('Checkbox', Checkbox)
 app.component('Dropdown', Dropdown)
 app.component('Toast', Toast)
@@ -62,5 +66,7 @@ app.component('Row', Row)
 app.component('Dialog', Dialog)
 app.component('Image', Image)
 app.component('AutoComplete', AutoComplete)
+app.component('ToggleButton', ToggleButton)
+app.component('FileUpload', FileUpload)
 
 app.mount('#app');

@@ -2,17 +2,10 @@
   <div class="container">
     <div class="main">
       <div class="input-group">
-        <InputText
-            placeholder="Введите название..."
-            v-model="searchTerm"
-            @keyup.enter="onSearch"
-        />
-        <Button
-            label="Поиск"
-            icon="pi pi-search"
-            @click="onSearch"
-            :loading="loading"
-        />
+        <InputText placeholder="Введите название..." v-model="searchTerm" @keyup.enter="onSearch"/>
+        <Button label="Поиск" icon="pi pi-search" @click="onSearch" :loading="loading"/>
+        <Button label="Создать" icon="pi pi-plus-circle" :style="{ margin: '0 0 0 10px' }"
+                @click="createProductVisible = true" severity="success" :loading="loading"/>
       </div>
 
       <DataTable v-if="products.length" :value="products" class="dataTable" tableStyle="min-width: 50rem" showGridlines
@@ -22,13 +15,12 @@
         <Column field="id" header="ID"></Column>
         <Column header="Фото">
           <template #body="{data}">
-            <Image :src="'https://api.abricoz.kz' + data.photo_url" width="100" preview/>
+            <Image v-if="data.photo_url" :src="'https://api.abricoz.kz' + data.photo_url" width="100" preview/>
           </template>
         </Column>
         <Column field="name_ru" header="Название"></Column>
         <Column field="subcategory.name_ru" header="Подкатегория"></Column>
-        <Column field="brand.name" header="Бренд"></Column>
-        <Column field="country.name" header="Страна"></Column>
+        <Column field="manufacturer" header="Производитель"></Column>
         <Column header="Цена">
           <template #body="{data}">
             <p class="text">Цена: {{ data.price }} тг</p>
@@ -39,6 +31,12 @@
         <Column header="Осталось">
           <template #body="{data}">{{ data.amount }} x {{ data.weight }}</template>
         </Column>
+        <Column header="Статус">
+          <template #body="{data}">
+            <p v-if="data.is_active">Да</p>
+            <p v-else>Нет</p>
+          </template>
+        </Column>
 
         <!-- Кнопки действий -->
         <Column header="Действия">
@@ -46,7 +44,9 @@
             <div class="button-group">
               <Button label="Склад" class="p-button-text" @click="editWarehouse(data)"/>
               <Button label="Изменить" class="p-button-text" @click="onEdit(data)"/>
-              <Button label="Удалить" class="p-button-text p-button-danger" @click="onDelete(data)"/>
+              <Button label="Удалить" class="p-button-text p-button-danger" @click="onDelete(data.id)"/>
+              <FileUpload mode="basic" name="photo" accept="image/*"
+                          :maxFileSize="1000000" auto @select="onFileSelect($event, data.id)" chooseLabel="Фото"/>
             </div>
           </template>
         </Column>
@@ -54,14 +54,95 @@
 
       <!-- Диалоговое окно для редактирования продукта -->
       <Dialog v-model:visible="editProductVisible" modal header="Изменить продукт" :style="{ width: '35%' }">
-        <pre>{{ editedProduct }}</pre>
-        <div class="p-fluid">
-          <div class="p-field">
-            <label for="name_ru">Название (RU)</label>
-            <InputText v-model="editedProduct.name_ru" id="name_ru"/>
+        <div class="dialog">
+          <div class="dialog__item">
+            <label>Название (RU)</label>
+            <InputText v-model="editedProduct.name_ru"/>
           </div>
 
-          <div class="p-field">
+          <div class="dialog__item">
+            <label>Название (KZ)</label>
+            <InputText v-model="editedProduct.name_kz"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Название (EN)</label>
+            <InputText v-model="editedProduct.name_en"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Описание (RU)</label>
+            <TextArea v-model="editedProduct.description_ru" autoResize/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Описание (KZ)</label>
+            <TextArea v-model="editedProduct.description_kz" autoResize/>
+          </div>
+
+
+          <div class="dialog__item">
+            <label>Описание (EN)</label>
+            <TextArea v-model="editedProduct.description_en" autoResize/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Полка</label>
+            <InputText v-model="editedProduct.where"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Производитель</label>
+            <InputText v-model="editedProduct.manufacturer"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Вес</label>
+            <InputText v-model="editedProduct.weight"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Калории</label>
+            <InputNumber v-model="editedProduct.calories" :maxFractionDigits="1"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Белки</label>
+            <InputNumber v-model="editedProduct.proteins" :maxFractionDigits="1"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Жиры</label>
+            <InputNumber v-model="editedProduct.fats" :maxFractionDigits="1"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Углеводы</label>
+            <InputNumber v-model="editedProduct.carbohydrates" :maxFractionDigits="1"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Цена</label>
+            <InputNumber v-model="editedProduct.price"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Скидка</label>
+            <InputNumber v-model="editedProduct.discount"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Цена со скидкой</label>
+            <InputNumber disabled v-model="editedProduct.price_with_discount"/>
+          </div>
+
+          <div class="dialog__item">
+            <label>Активен?</label>
+            <ToggleButton v-model="editedProduct.is_active" onLabel="Да" offLabel="Нет" true-value="1" false-value="0"/>
+          </div>
+
+
+          <div class="dialog__item">
             <label for="subcategory">Подкатегория</label>
             <Dropdown
                 v-model="editedProduct.subcategory_id"
@@ -72,32 +153,7 @@
             />
           </div>
 
-          <div class="p-field">
-            <label for="brand">Бренд</label>
-            <AutoComplete
-                v-model="editedProduct.brand_id"
-                :suggestions="brandSuggestions"
-                @complete="searchBrands"
-                optionLabel="name"
-                field="name"
-                placeholder="Введите бренд"
-            />
-          </div>
-
-          <div class="p-field">
-            <label for="country">Страна</label>
-            <AutoComplete
-                v-model="editedProduct.country"
-                :suggestions="countrySuggestions"
-                @complete="searchCountries"
-                field="name"
-                placeholder="Введите страну"
-            />
-          </div>
-
-          <div class="p-field">
-            <Button label="Сохранить" icon="pi pi-check" @click="onSave"/>
-          </div>
+          <Button label="Сохранить" icon="pi pi-check" @click="onSave" :loading="loading"/>
         </div>
       </Dialog>
     </div>
@@ -111,6 +167,116 @@
       <div class="amount">
         <InputNumber v-model="adjustAmount"/>
         <Button class="amount__button" @click="editAmount" :loading="loading" label="Изменить количество"/>
+      </div>
+    </Dialog>
+
+    <Dialog v-model:visible="createProductVisible" modal header="Создать продукт" :style="{ width: '35%' }">
+      <div class="dialog">
+        <pre>{{ createProduct }}</pre>
+        <div class="dialog__item">
+          <label>Название (RU)</label>
+          <InputText v-model="createProduct.name_ru"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Название (KZ)</label>
+          <InputText v-model="createProduct.name_kz"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Название (EN)</label>
+          <InputText v-model="createProduct.name_en"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Описание (RU)</label>
+          <TextArea v-model="createProduct.description_ru" autoResize/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Описание (KZ)</label>
+          <TextArea v-model="createProduct.description_kz" autoResize/>
+        </div>
+
+
+        <div class="dialog__item">
+          <label>Описание (EN)</label>
+          <TextArea v-model="createProduct.description_en" autoResize/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Полка</label>
+          <InputText v-model="createProduct.where"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Производитель</label>
+          <InputText v-model="createProduct.manufacturer"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Вес</label>
+          <InputText v-model="createProduct.weight"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Количество</label>
+          <InputNumber v-model="createProduct.amount"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Калории</label>
+          <InputNumber v-model="createProduct.calories" :maxFractionDigits="1"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Белки</label>
+          <InputNumber v-model="createProduct.proteins" :maxFractionDigits="1"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Жиры</label>
+          <InputNumber v-model="createProduct.fats" :maxFractionDigits="1"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Углеводы</label>
+          <InputNumber v-model="createProduct.carbohydrates" :maxFractionDigits="1"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Цена</label>
+          <InputNumber v-model="createProduct.price"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Скидка</label>
+          <InputNumber v-model="createProduct.discount"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Цена со скидкой</label>
+          <InputNumber disabled v-model="createProduct.price_with_discount"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Активен?</label>
+          <ToggleButton v-model="createProduct.is_active" onLabel="Да" offLabel="Нет"/>
+        </div>
+
+        <div class="dialog__item">
+          <label for="subcategory">Подкатегория</label>
+          <Dropdown
+              v-model="createProduct.subcategory_id"
+              :options="subcategories"
+              optionLabel="name_ru"
+              optionValue="id"
+              placeholder="Выберите подкатегорию"
+          />
+        </div>
+
+        <Button label="Создать" :disabled="!isFormValid || loading" @click="onCreate" :style="{margin: '10px 0 0 0'}"
+                :loading="loading"/>
       </div>
     </Dialog>
 
@@ -128,21 +294,85 @@ export default {
     return {
       amountChange: 0,
       adjustAmount: 0,
-
       searchTerm: "",
       products: [],
       editedProduct: {},
       editProductVisible: false,
       editWarehouseVisible: false,
+      createProductVisible: false,
       subcategories: [],
       brandSuggestions: [],
       countrySuggestions: [],
       loading: null,
+      createProduct: {
+        price: 0,
+        discount: 0,
+        price_with_discount: 0,
+        amount: 0,
+        is_active: 0, // Значение по умолчанию для переключателя "Активен?"
+      },
     };
   },
+  computed: {
+    // Проверяем, заполнены ли все необходимые поля для создания продукта
+    isFormValid() {
+      return (
+          this.createProduct.name_ru &&
+          this.createProduct.name_kz &&
+          this.createProduct.name_en &&
+          this.createProduct.description_ru &&
+          this.createProduct.description_kz &&
+          this.createProduct.description_en &&
+          this.createProduct.where &&
+          this.createProduct.manufacturer &&
+          this.createProduct.weight &&
+          this.createProduct.calories != null &&
+          this.createProduct.proteins != null &&
+          this.createProduct.fats != null &&
+          this.createProduct.carbohydrates != null &&
+          this.createProduct.price != null &&
+          this.createProduct.discount != null &&
+          this.createProduct.is_active != null &&
+          this.createProduct.subcategory_id != null
+      );
+    },
+  },
+  watch: {
+    // Следим за изменениями цены и скидки для обновления цены со скидкой
+    "createProduct.price": "updatePriceWithDiscountCreateProduct",
+    "createProduct.discount": "updatePriceWithDiscountCreateProduct",
+    "editedProduct.price": "updatePriceWithDiscountEditProduct",
+    "editedProduct.discount": "updatePriceWithDiscountEditProduct",
+  },
   methods: {
+    async onFileSelect(event, productId) {
+      this.loading = true;
+      const file = event.files[0];
+
+      if (file) {
+        const formData = new FormData();
+        formData.append('photo', file);
+
+        let res = await warehouseService.addPhotoProduct(formData, productId);
+        if (res) {
+          this.$toast.add({
+            severity: "success",
+            summary: "Успешно",
+            detail: "Фото было успешно загружено",
+          });
+        } else {
+          this.$toast.add({
+            severity: "error",
+            summary: "Что то пошло не так",
+            detail: "Не удалось загрузить фото",
+          });
+        }
+        await this.onSearch();
+        this.loading = false;
+      }
+    },
     async editWarehouse(data) {
-      console.log(data)
+      console.log(data);
       this.adjustAmount = data.amount;
       this.editedProduct = data;
       this.editWarehouseVisible = true;
@@ -151,7 +381,10 @@ export default {
       this.loading = true;
       this.editedProduct.amount += this.amountChange;
 
-      let res = await warehouseService.updateProduct(this.editedProduct.id, this.editedProduct);
+      let res = await warehouseService.updateProduct(
+          this.editedProduct.id,
+          this.editedProduct
+      );
       if (res) {
         this.$toast.add({
           severity: "success",
@@ -172,7 +405,10 @@ export default {
       if (this.editedProduct.amount - this.amountChange >= 0) {
         this.editedProduct.amount -= this.amountChange;
 
-        let res = await warehouseService.updateProduct(this.editedProduct.id, this.editedProduct);
+        let res = await warehouseService.updateProduct(
+            this.editedProduct.id,
+            this.editedProduct
+        );
         if (res) {
           this.$toast.add({
             severity: "success",
@@ -199,7 +435,10 @@ export default {
 
       this.editedProduct.amount = this.adjustAmount;
 
-      let res = await warehouseService.updateProduct(this.editedProduct.id, this.editedProduct);
+      let res = await warehouseService.updateProduct(
+          this.editedProduct.id,
+          this.editedProduct
+      );
       if (res) {
         this.$toast.add({
           severity: "success",
@@ -213,8 +452,6 @@ export default {
       this.editWarehouseVisible = false;
       this.loading = false;
     },
-
-
     async onSearch() {
       this.loading = true;
       if (this.searchTerm.trim() === "") {
@@ -223,38 +460,39 @@ export default {
           summary: "Предупреждение",
           detail: "Введите название товара для поиска",
         });
-        return;
-      }
-      const result = await warehouseService.search(this.searchTerm);
-      if (result) {
-        this.products = result;
       } else {
-        this.$toast.add({
-          severity: "error",
-          summary: "Ошибка",
-          detail: "Ошибка при поиске товаров",
-        });
+        const result = await warehouseService.search(this.searchTerm);
+        if (result) {
+          this.products = result;
+        } else {
+          this.$toast.add({
+            severity: "error",
+            summary: "Ошибка",
+            detail: "Ошибка при поиске товаров",
+          });
+        }
       }
       this.loading = false;
     },
     async onEdit(product) {
-      console.log(product)
+      console.log(product);
       this.editedProduct = product;
       this.editProductVisible = true;
     },
     async onSave() {
-      const updatedProduct = await warehouseService.updateProduct(this.editedProduct.id, this.editedProduct);
-      if (updatedProduct) {
-        const index = this.products.findIndex(p => p.id === updatedProduct.id);
-        if (index !== -1) {
-          this.$set(this.products, index, updatedProduct);
-        }
+      this.loading = true;
+      const result = await warehouseService.updateProduct(
+          this.editedProduct.id,
+          this.editedProduct
+      );
+      if (result) {
         this.$toast.add({
           severity: "success",
           summary: "Успех",
           detail: "Продукт успешно обновлен",
         });
         this.editProductVisible = false;
+        await this.onSearch();
       } else {
         this.$toast.add({
           severity: "error",
@@ -262,17 +500,21 @@ export default {
           detail: "Ошибка при обновлении продукта",
         });
       }
+      this.loading = false;
     },
-    async onDelete(product) {
-      const confirmed = confirm(`Вы уверены, что хотите удалить продукт ID: ${product.id}?`);
+    async onDelete(id) {
+      this.loading = true;
+      const confirmed = confirm(
+          `Вы уверены, что хотите удалить продукт ID: ${id}?`
+      );
       if (confirmed) {
-        const success = await warehouseService.deleteProduct(product.id);
+        const success = await warehouseService.deleteProduct(id);
         if (success) {
-          this.products = this.products.filter(p => p.id !== product.id);
+          await this.onSearch();
           this.$toast.add({
             severity: "success",
             summary: "Удалено",
-            detail: `Продукт ID: ${product.id} успешно удален`,
+            detail: `Продукт ID: ${id} успешно удален`,
           });
         } else {
           this.$toast.add({
@@ -282,11 +524,12 @@ export default {
           });
         }
       }
+      this.loading = false;
     },
     async searchBrands(event) {
       const query = event.query;
 
-      if (query.length > 3){
+      if (query.length > 3) {
         const brands = await warehouseService.getBrands(query);
         this.brandSuggestions = brands;
       }
@@ -295,6 +538,41 @@ export default {
       const query = event.query;
       const countries = await warehouseService.getCountries(query);
       this.countrySuggestions = countries;
+    },
+    // Метод для обновления цены со скидкой
+    updatePriceWithDiscountCreateProduct() {
+      let price = this.createProduct.price || 0;
+      let discount = this.createProduct.discount || 0;
+      let discountedPrice = price - (price * discount) / 100;
+      this.createProduct.price_with_discount = Math.round(discountedPrice);
+    },
+    updatePriceWithDiscountEditProduct() {
+      let price = this.editedProduct.price || 0;
+      let discount = this.editedProduct.discount || 0;
+      let discountedPrice = price - (price * discount) / 100;
+      this.editedProduct.price_with_discount = Math.round(discountedPrice);
+    },
+    // Метод для создания нового продукта
+    async onCreate() {
+      this.loading = true;
+
+      // Отправляем данные на сервер
+      const result = await warehouseService.createProduct(this.createProduct);
+      if (result) {
+        this.$toast.add({
+          severity: "success",
+          summary: "Успех",
+          detail: "Продукт успешно создан",
+        });
+        this.createProductVisible = false;
+      } else {
+        this.$toast.add({
+          severity: "error",
+          summary: "Ошибка",
+          detail: "Ошибка при создании продукта",
+        });
+      }
+      this.loading = false;
     },
   },
   async mounted() {
@@ -333,5 +611,12 @@ export default {
 
 .amount__button {
   margin-left: 10px;
+}
+
+.dialog__item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>
