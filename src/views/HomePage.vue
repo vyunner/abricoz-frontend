@@ -43,11 +43,9 @@ export default {
   </header>
 
   <section class="main-background">
-    <div class="header-background__basket">
-      <img class="arrow" src="@/assets/images/arrow.svg" alt="">
-      <img class="arrow-phone" src="@/assets/images/arrow-phone.svg" alt="">
-      <img class="stars" src="@/assets/images/stars.svg" alt="">
-    </div>
+    <img class="arrow" src="@/assets/images/arrow.svg" alt="">
+    <img class="arrow-phone" src="@/assets/images/arrow-phone.svg" alt="">
+    <img class="stars" src="@/assets/images/stars.svg" alt="">
   </section>
 
   <main>
@@ -87,57 +85,43 @@ export default {
         <div class="advantages-content__cards">
 
           <div class="advantages-content__card">
-
             <div class="advantages-content__card-icon" >
               <img src="@/assets/images/clock.svg" alt="">
             </div>
-
-
             <div class="advantages-content__card-content">
               <h2 class="advantages-content__card-title">Экономия вашего времени</h2>
               <p class="advantages-content__card-text">Вам больше не придется тратить свое время на длительный поход в супермаркет. Доставим прямо до двери вашей квартиры.</p>
-
             </div>
-
           </div>
 
           <div class="advantages-content__card">
             <div class="advantages-content__card-icon">
               <img style="transform: rotate(35deg);" src="@/assets/images/tag.png" alt="">
             </div>
-
             <div class="advantages-content__card-content">
               <h2 class="advantages-content__card-title">Доступные цены</h2>
               <p class="advantages-content__card-text">Ваши любимые продукты по ценам, которые радуют.</p>
-
             </div>
-
           </div>
 
           <div class="advantages-content__card">
             <div class="advantages-content__card-icon">
               <img src="@/assets/images/lending-sheets.svg" alt="">
             </div>
-
             <div class="advantages-content__card-content">
               <h2 class="advantages-content__card-title">Свежесть продуктов</h2>
               <p class="advantages-content__card-text">Мы бережно собираем ваш заказ перед доставкой, внимательно проверяя срок годности и свежесть.</p>
-
             </div>
-
           </div>
 
           <div class="advantages-content__card">
             <div class="advantages-content__card-icon">
               <img src="@/assets/images/gift.svg" alt="">
             </div>
-
             <div class="advantages-content__card-content">
               <h2 class="advantages-content__card-title">Бесплатная доставка</h2>
               <p class="advantages-content__card-text">Мы доставим ваш заказ бесплатно, без скрытых комиссий. <br> <br>Рабочие часы с 9:00 до 22:00.</p>
-
             </div>
-
           </div>
 
         </div>
@@ -146,6 +130,59 @@ export default {
 
     </div>
   </section>
+
+  <section class="about-background">
+    <div class="about-background">
+      <div class="about-card-background">
+
+      </div>
+<!--      <img src="@/assets/images/about-background.png" alt="" >-->
+      <div class="about-background__bowl">
+        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="about-card-image3">
+        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="about-card-image2">
+        <img src="@/assets/images/fruit%20bowl.png" alt="" class="about-card-image1">
+      </div>
+      <div class="about-background__bowl2">
+        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="about-card-image3">
+        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="about-card-image2">
+        <img src="@/assets/images/fruit%20bowl.png" alt="" class="about-card-image1">
+      </div>
+    </div>
+  </section>
+
+
+  <section class="about">
+    <div class="lending-container">
+      <div class="about-content">
+        <div class="about-content__info">
+          <h2>Контакты</h2>
+          <p><strong>Email:</strong></p>
+          <p><a href="#">info@abricoz.kz</a></p>
+          <p><strong>Номер телефона:</strong></p>
+          <p>+7 777 040 44 99 <br> +7 702 620 74 47</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="lending-container">
+      <div class="lending-footer__content">
+        <div class="lending-footer__img">
+          <img src="@/assets/images/footer-logo.svg" alt="Footer Logo" >
+        </div>
+
+        <div class="lending-footer__img">
+          <img src="@/assets/images/inst-logo.svg" alt="Inst Logo" >
+        </div>
+
+        <div class="lending-footer__text" style="color: #fff">
+          © 2024 Abricoz. Все права защищены.
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </template>
 
@@ -156,7 +193,7 @@ export default {
 
 html, body {
   font-size: 20px !important;
-  overflow: hidden !important;
+  overflow: auto;
   margin: 0;
   padding: 0;
 }
@@ -283,7 +320,7 @@ nav a:hover {
 .main-background {
   position: relative;
   top: 300px;
-  left: 0;
+  left: 48vw;
   z-index: -1;
 }
 
@@ -358,8 +395,7 @@ main {
 //*  --  --  --  --  --    ADVANTAGES    --  --  --  --  --  *//
 .advantages {
   padding: 140px 0 0;
-  max-height: 626px;
-  margin: 0 0 128px;
+  margin: 0;
 }
 
 .advantages-content__title{
@@ -404,8 +440,141 @@ main {
 }
 
 
+//*  --  --  --  --  --    ABOUT    --  --  --  --  --  *//
+.about {
+  margin: 375px auto;
+}
+
+.about-content{
+  display: flex;
+  justify-content: end;
+}
+
+.about-content__info{
+  margin-right: 10vw;
+}
+
+.about-content__info h2{
+  color: #fff;
+  padding-top: 20px;
+  font-size: 60px;
+}
+
+.about-content__info p{
+  color: #CCCCCC;
+  font-size: 20px;
+}
+.about-content__info p:nth-child(2){
+  margin: 20px 0 10px;
+}
+.about-content__info p:nth-child(3){
+  margin: 0;
+}
+.about-content__info p:nth-child(4){
+  margin: 30px 0 10px;
+}
+.about-content__info strong{
+  margin-bottom: 0;
+}
+
+.about-content__info p:last-child{
+  margin-top: 0;
+  color: #fff;
+  font-size: 32px;
+}
+.about-content__info a{
+  color: #fff;
+  font-size: 32px;
+}
+
+.about-background{
+  width: 100%;
+  margin: 380px 0;
+  top: -10px;
+  left: 0;
+  position: relative;
+  z-index: -1;
+}
+
+.about-background__bowl{
+  width: 100%;
+  max-width: 1200px;
+  top: -120px;
+  left: 14vw;
+  position: relative;
+  z-index: 0;
+}
+
+.about-background__bowl2{
+  visibility: hidden;
+  width: 100%;
+  max-width: 1200px;
+  top: -120px;
+  left: 14vw;
+  position: relative;
+  z-index: 0;
+}
+
+.about-card-background{
+  position: absolute;
+  background-color: #195a00;
+  border-radius: 50px;
+  top: 0;
+  right: 10vw;
+  width: 1560px;
+  height: 369px;
+  z-index: -1;
+}
+
+.about-card-image1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 730px;
+  height: 585px;
+  z-index: -1;
+}
+
+.about-card-image2{
+  position: absolute;
+  top: -50PX;
+  left: 360px;
+  width: 493px;
+  height: 484px;
+  z-index: -1;
+}
+
+.about-card-image3{
+  position: absolute;
+  top: 242PX;
+  left: -70PX;
+  width: 282px;
+  height: 270px;
+  z-index: -1;
+}
 
 
+//*  --  --  --  --  --    FOOTER    --  --  --  --  --  *//
+.footer {
+  background: #195a00;
+  padding: 80px 0;
+}
+
+.lending-footer__text{
+  text-align: center;
+}
+
+@media (max-width: 1440px) {
+  .about-background__bowl{
+    left: 6%;
+  }
+
+  .about-card-background {
+    right:0;
+    width: 100%;
+    max-width: 1280px;
+  }
+}
 
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 1200PX    --  --  --  --  --  *//
 @media (max-width: 1200px) {
@@ -439,7 +608,7 @@ main {
   }
 
   .main-background {
-    left: 9.4vw;
+    left: 60vw;
   }
 
   .app-store-img {
@@ -467,6 +636,18 @@ main {
     height: 60px;
   }
 
+  .about-background__bowl{
+    top: -60px;
+    left: -5.5vw;
+    transform: scale(0.78);
+  }
+
+  .about-card-background {
+    right:0;
+    width: 100%;
+    max-width: 1280px;
+  }
+
 
 }
 
@@ -474,7 +655,7 @@ main {
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 992PX    --  --  --  --  --  *//
 @media (max-width: 1020px) {
   .main-background {
-    left: 11vw;
+    left: 64vw;
   }
 }
 
@@ -507,7 +688,7 @@ main {
   }
 
   .main-background {
-    left: 14vw;
+    left: 65vw;
   }
 
   .stars {
@@ -533,8 +714,108 @@ main {
     font-size: 30px
   }
 
+  .about-background__bowl{
+    top: 0;
+    left: -15vw;
+    transform: scale(0.6) rotate(-16deg);
+  }
+
+  .about {
+    margin: 250px 0 340px;
+  }
+
+  .about-background {
+    margin: 250px 0;
+  }
+
 
 }
+
+@media (max-width: 980px) {
+  .about {
+    margin: 200px 0 400px;
+  }
+
+  .about-background {
+    margin: 200px 0;
+  }
+
+  .about-content{
+    justify-content: center;
+  }
+
+  .about-content__info{
+    margin-right: 0;
+  }
+
+  .about-card-background{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 380px;
+    z-index: -1;
+  }
+
+  .about-background__bowl{
+    top: 220px;
+    left: -20vw;
+    transform: scale(0.6) rotate(50deg);
+  }
+
+  .about-background__bowl2{
+    visibility: visible;
+    position: absolute;
+    top: 100px;
+    left: 26vw;
+    transform: scale(0.6) rotate(-120deg);
+  }
+
+  .about-card-image3{
+    top: -30PX;
+    left: -20px;
+    transform: rotate(40deg);
+  }
+
+  .about-content__info h2{
+    text-align: center;
+    color: #fff;
+    padding-top: 20px;
+    font-size: 32px;
+  }
+
+  .about-content__info p{
+    text-align: center;
+    color: #CCCCCC;
+    font-size: 20px;
+  }
+  //.about-content__info p:nth-child(2){
+  //  margin: 20px 0 10px;
+  //}
+  //.about-content__info p:nth-child(3){
+  //  margin: 0;
+  //}
+  //.about-content__info p:nth-child(4){
+  //  margin: 30px 0 10px;
+  //}
+  //.about-content__info strong{
+  //  margin-bottom: 0;
+  //}
+
+  .about-content__info p:last-child{
+    margin-top: 0;
+    color: #fff;
+    font-size: 26px;
+  }
+  .about-content__info a{
+    color: #fff;
+    font-size: 26px;
+  }
+
+
+
+}
+
 
 
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 896PX    --  --  --  --  --  *//
@@ -585,8 +866,8 @@ main {
     color: #fff;
   }
 
-  .main-background {
-    left: 14vw;
+  .main-background{
+    left: 64vw;
   }
 
   .stars {
@@ -605,7 +886,22 @@ main {
     gap: 20px;
   }
 
+  .about-background__bowl{
+    top: 290px;
+    left: 3vw;
+    transform: scale(0.5);
+  }
 
+  .about-card-background{
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    max-width: 460px;
+  }
+
+  .about-background__bowl2{
+    visibility: hidden;
+  }
 
 
 }
@@ -647,6 +943,28 @@ main {
   .arrow {
     top: 300px;
     left: 68px;
+  }
+
+  .about-background__bowl{
+    top: 300px;
+    left: -2vw;
+    transform: scale(0.5);
+  }
+
+  .about-card-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 460px;
+    height: 480px;
+    z-index: -1;
+  }
+
+  .main-background{
+    top: 314px;
+    left: 63vw;
   }
 
 }
@@ -728,6 +1046,28 @@ main {
     display: none;
   }
 
+  .about-card-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 420px;
+    height: 480px;
+    z-index: -1;
+  }
+
+  .about-background__bowl{
+    top: 300px;
+    left: -5vw;
+    transform: scale(0.5);
+  }
+
+  .main-content__title{
+    width: 325px
+  }
+
+
 }
 
 @media (max-width: 576px) {
@@ -781,16 +1121,39 @@ main {
     left: -6px;
     transform: rotate(-6deg);
   }
+
+  .about-background__bowl{
+    top: 300px;
+    left: -14vw;
+    transform: scale(0.4);
+  }
+
+  .main-background {
+    left: 60vw;
+  }
 }
 
-////*  --  --  --  --  --    MEDIA MAX-WIDTH 360PX    --  --  --  --  --  *//
-//@media (max-width: 360px) {
-//  .lending-container {
-//    width: 100%;
-//    max-width: 320px;
-//    margin: 0 auto;
-//  }
-//
-//}
+//*  --  --  --  --  --    MEDIA MAX-WIDTH 360PX    --  --  --  --  --  *//
+@media (max-width: 364px) {
+
+  .about-card-background{
+      border-radius: 34px;
+  }
+
+  .footer {
+    padding: 40px 0;
+  }
+
+  .lending-footer__text{
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .main-background {
+    left: 60vw;
+  }
+
+
+}
 
 </style>
