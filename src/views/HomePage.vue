@@ -405,6 +405,8 @@ main {
 
 
 
+
+
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 1200PX    --  --  --  --  --  *//
 @media (max-width: 1200px) {
   .lending-container {
