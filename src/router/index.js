@@ -3,16 +3,16 @@ import HomeView from '../views/HomeView.vue'
 import AdminView from "@/views/AdminView.vue";
 
 const routes = [
-    {
-        path: '/home',
-        name: 'home',
-        component: HomeView,
-    },
-    {
-        path: '/phone-home',
-        name: 'phone-home',
-        component: import('@/views/PhoneHomeView.vue'),
-    },
+    // {
+    //     path: '/home',
+    //     name: 'home',
+    //     component: HomeView,
+    // },
+    // {
+    //     path: '/phone-home',
+    //     name: 'phone-home',
+    //     component: import('@/views/PhoneHomeView.vue'),
+    // },
     {
         path: '/',
         name: 'lending',
