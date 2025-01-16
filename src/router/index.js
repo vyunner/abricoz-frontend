@@ -15,7 +15,7 @@ const routes = [
     // },
     {
         path: '/',
-        name: 'lending',
+        name: 'home',
         component: import('@/views/HomePage.vue'),
     },
     {
