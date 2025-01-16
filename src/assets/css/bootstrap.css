@@ -1,8 +1,8 @@
 /* grid.css */
-body {
+html, body {
   margin: 0 !important;
   padding: 0 !important;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 /* Контейнеры */
 .container {
@@ -43,6 +43,11 @@ body {
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
+  }
+}
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1310px;
   }
 }
 

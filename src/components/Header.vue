@@ -52,14 +52,14 @@ export default {
             {
               label: 'Сотрудники',
               command: () => {
-                this.$router.push('/user/get-users-with-roles');
+                this.$router.push('/admin/user/get-users-with-roles');
                 this.menuVisible = false;
               }
             },
             {
               label: 'Выдача ролей',
               command: () => {
-                this.$router.push('/user/set-roles');
+                this.$router.push('/admin/user/set-roles');
                 this.menuVisible = false;
               }
             },
@@ -72,14 +72,14 @@ export default {
             {
               label: 'Прикрепить заказы',
               command: () => {
-                this.$router.push('/dispatcher/assign-orders');
+                this.$router.push('/admin/dispatcher/assign-orders');
                 this.menuVisible = false;
               }
             },
             {
               label: 'Открепить заказы',
               command: () => {
-                this.$router.push('/dispatcher/unassign-orders');
+                this.$router.push('/admin/dispatcher/unassign-orders');
                 this.menuVisible = false;
               }
             },
@@ -92,7 +92,7 @@ export default {
             {
               label: 'Заполнение товаров',
               command: () => {
-                this.$router.push('/warehouse/fill');
+                this.$router.push('/admin/warehouse/fill');
                 this.menuVisible = false;
               }
             },

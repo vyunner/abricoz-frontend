@@ -1,11 +1,27 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import AdminView from "@/views/AdminView.vue";
 
 const routes = [
     {
         path: '/',
         name: 'home',
         component: HomeView,
+    },
+    {
+        path: '/phone-home',
+        name: 'phone-home',
+        component: import('@/views/PhoneHomeView.vue'),
+    },
+    {
+        path: '/home',
+        name: 'lending',
+        component: import('@/views/HomePage.vue'),
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: AdminView,
         children: [
             {
                 path: 'user/get-users-with-roles',
