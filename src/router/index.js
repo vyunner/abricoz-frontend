@@ -4,7 +4,7 @@ import AdminView from "@/views/AdminView.vue";
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: HomeView,
     },
@@ -14,7 +14,7 @@ const routes = [
         component: import('@/views/PhoneHomeView.vue'),
     },
     {
-        path: '/home',
+        path: '/',
         name: 'lending',
         component: import('@/views/HomePage.vue'),
     },
