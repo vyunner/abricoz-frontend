@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "HomePage"
+  name: "HomePage",
 }
 </script>
 
@@ -17,7 +17,7 @@ export default {
     <img class="header-background__banner" src="@/assets/images/banner%20background.png" alt=""/>
   </section>
 
-  <header>
+  <header id="header">
     <div class="lending-container">
 
       <div class="header-content">
@@ -25,10 +25,10 @@ export default {
         <img class="header-content__logo" src="@/assets/images/logo.svg" alt="">
 
         <nav>
-          <a href="">Главная</a>
-          <a href=""> О нас</a>
-          <a href="">Преимущества</a>
-          <a href=""> Контакты</a>
+          <a href="#">Главная</a>
+          <a href="#header"> О нас</a>
+          <a href="#advantages">Преимущества</a>
+          <a href="#contact" > Контакты</a>
         </nav>
 
         <div class="header-content__burger">
@@ -42,7 +42,7 @@ export default {
     </div>
   </header>
 
-  <section class="main-background">
+  <section class="about-background">
     <img class="arrow" src="@/assets/images/arrow.svg" alt="">
     <img class="arrow-phone" src="@/assets/images/arrow-phone.svg" alt="">
     <img class="stars" src="@/assets/images/stars.svg" alt="">
@@ -52,10 +52,10 @@ export default {
 
     <div class="lending-container">
 
-      <div class="main-content">
-        <div class="main-content__title">Супермаркет с бесплатной доставкой</div>
+      <div class="about-content">
+        <div class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</div>
 
-        <div class="main-content__buttons">
+        <div class="about-content__buttons">
           <a href="https://play.google.com/store/games?hl=ru&pli=1" target="_blank">
             <img class="google-play-img" src="@/assets/images/google%20play.png" alt="" />
             <img class="google-play-img__phone" src="@/assets/images/google-play-phone.png" alt="" />
@@ -73,7 +73,7 @@ export default {
   </main>
 
 
-  <section class="advantages">
+  <section class="advantages" id="advantages">
     <div class="lending-container">
 
       <div class="advantages-content">
@@ -131,30 +131,31 @@ export default {
     </div>
   </section>
 
-  <section class="about-background">
-    <div class="about-background">
-      <div class="about-card-background">
+  <section id="contact" style="margin-top: 100px;"></section>
+
+  <section class="contact-background">
+    <div class="contact-background">
+      <div class="contact-card-background">
 
       </div>
-<!--      <img src="@/assets/images/about-background.png" alt="" >-->
-      <div class="about-background__bowl">
-        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="about-card-image3">
-        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="about-card-image2">
-        <img src="@/assets/images/fruit%20bowl.png" alt="" class="about-card-image1">
+      <div class="contact-background__bowl">
+        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
+        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
+        <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
       </div>
-      <div class="about-background__bowl2">
-        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="about-card-image3">
-        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="about-card-image2">
-        <img src="@/assets/images/fruit%20bowl.png" alt="" class="about-card-image1">
+      <div class="contact-background__bowl2">
+        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
+        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
+        <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
       </div>
     </div>
   </section>
 
 
-  <section class="about">
+  <section class="contact">
     <div class="lending-container">
-      <div class="about-content">
-        <div class="about-content__info">
+      <div class="contact-content">
+        <div class="contact-content__info">
           <h2>Контакты</h2>
           <p><strong>Email:</strong></p>
           <p><a href="#">info@abricoz.kz</a></p>
@@ -166,7 +167,7 @@ export default {
   </section>
 
 
-  <footer class="footer">
+  <footer class="footer" id="footer">
     <div class="lending-container">
       <div class="lending-footer__content">
         <div class="lending-footer__img">
@@ -317,7 +318,7 @@ nav a:hover {
 
 //*  --  --  --  --  --    MAIN BACKGROUND    --  --  --  --  --  *//
 
-.main-background {
+.about-background {
   position: relative;
   top: 300px;
   left: 48vw;
@@ -329,14 +330,14 @@ nav a:hover {
 }
 
 .stars {
-  top: 30px;
+  top: 100px;
   left: -160px;
   width: 83px;
   height: 83px;
 }
 
 .arrow {
-  top: 144px;
+  top: 214px;
   left: -163px;
   width: 134px;
   height: 141px;
@@ -351,21 +352,21 @@ main {
   margin-bottom: 266px;
 }
 
-.main-content{
+.about-content{
   display: flex;
   flex-direction: column;
   width: 570px;
 }
 
-.main-content__title {
+.about-content__title {
   color: #333333;
   font-weight: 700;
   line-height: 68px;
-  font-size: 60px;
+  font-size: 54px;
   margin-bottom: 124px;
 }
 
-.main-content__buttons{
+.about-content__buttons{
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -382,10 +383,6 @@ main {
   height: 60px;
 }
 
-
-.app-store-img__phone,  .google-play-img__phone {
-
-}
 
 .arrow-phone, .app-store-img__phone,  .google-play-img__phone {
   display: none;
@@ -440,54 +437,54 @@ main {
 }
 
 
-//*  --  --  --  --  --    ABOUT    --  --  --  --  --  *//
-.about {
-  margin: 375px auto;
+//*  --  --  --  --  --    CONTACT    --  --  --  --  --  *//
+.contact {
+  margin: 275px auto 375px;
 }
 
-.about-content{
+.contact-content{
   display: flex;
   justify-content: end;
 }
 
-.about-content__info{
+.contact-content__info{
   margin-right: 10vw;
 }
 
-.about-content__info h2{
+.contact-content__info h2{
   color: #fff;
   padding-top: 20px;
   font-size: 60px;
 }
 
-.about-content__info p{
+.contact-content__info p{
   color: #CCCCCC;
   font-size: 20px;
 }
-.about-content__info p:nth-child(2){
+.contact-content__info p:nth-child(2){
   margin: 20px 0 10px;
 }
-.about-content__info p:nth-child(3){
+.contact-content__info p:nth-child(3){
   margin: 0;
 }
-.about-content__info p:nth-child(4){
+.contact-content__info p:nth-child(4){
   margin: 30px 0 10px;
 }
-.about-content__info strong{
+.contact-content__info strong{
   margin-bottom: 0;
 }
 
-.about-content__info p:last-child{
+.contact-content__info p:last-child{
   margin-top: 0;
   color: #fff;
   font-size: 32px;
 }
-.about-content__info a{
+.contact-content__info a{
   color: #fff;
   font-size: 32px;
 }
 
-.about-background{
+.contact-background{
   width: 100%;
   margin: 380px 0;
   top: -10px;
@@ -496,7 +493,7 @@ main {
   z-index: -1;
 }
 
-.about-background__bowl{
+.contact-background__bowl{
   width: 100%;
   max-width: 1200px;
   top: -120px;
@@ -505,7 +502,7 @@ main {
   z-index: 0;
 }
 
-.about-background__bowl2{
+.contact-background__bowl2{
   visibility: hidden;
   width: 100%;
   max-width: 1200px;
@@ -515,7 +512,7 @@ main {
   z-index: 0;
 }
 
-.about-card-background{
+.contact-card-background{
   position: absolute;
   background-color: #195a00;
   border-radius: 50px;
@@ -526,7 +523,7 @@ main {
   z-index: -1;
 }
 
-.about-card-image1 {
+.contact-card-image1 {
   position: absolute;
   top: 0;
   left: 0;
@@ -535,7 +532,7 @@ main {
   z-index: -1;
 }
 
-.about-card-image2{
+.contact-card-image2{
   position: absolute;
   top: -50PX;
   left: 360px;
@@ -544,7 +541,7 @@ main {
   z-index: -1;
 }
 
-.about-card-image3{
+.contact-card-image3{
   position: absolute;
   top: 242PX;
   left: -70PX;
@@ -557,19 +554,27 @@ main {
 //*  --  --  --  --  --    FOOTER    --  --  --  --  --  *//
 .footer {
   background: #195a00;
-  padding: 80px 0;
+  padding: 70px 0 60px;
 }
+
+.lending-footer__content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
 
 .lending-footer__text{
   text-align: center;
 }
 
 @media (max-width: 1440px) {
-  .about-background__bowl{
+  .contact-background__bowl{
     left: 6%;
   }
 
-  .about-card-background {
+  .contact-card-background {
     right:0;
     width: 100%;
     max-width: 1280px;
@@ -599,15 +604,15 @@ main {
     left: 56vw;
   }
 
-  .main-content{
+  .about-content{
     width: 470px;
   }
 
-  .main-content__title{
+  .about-content__title{
     font-size: 50px;
   }
 
-  .main-background {
+  .about-background {
     left: 60vw;
   }
 
@@ -617,6 +622,21 @@ main {
 
   .arrow-phone, .app-store-img__phone,  .google-play-img__phone {
     display: none;
+  }
+
+  .about-content{
+    padding-top: 70px;
+    width: 540px;
+  }
+
+  .stars {
+    top: 160px;
+    left: -160px;
+  }
+
+  .arrow {
+    top: 274px;
+    left: -190px;
   }
 
 
@@ -636,13 +656,13 @@ main {
     height: 60px;
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: -60px;
     left: -5.5vw;
     transform: scale(0.78);
   }
 
-  .about-card-background {
+  .contact-card-background {
     right:0;
     width: 100%;
     max-width: 1280px;
@@ -654,7 +674,7 @@ main {
 
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 992PX    --  --  --  --  --  *//
 @media (max-width: 1020px) {
-  .main-background {
+  .about-background {
     left: 64vw;
   }
 }
@@ -676,7 +696,7 @@ main {
     margin-bottom: 100px;
   }
 
-  .main-content__title{
+  .about-content__title{
     font-size: 50px;
   }
 
@@ -687,7 +707,7 @@ main {
     margin-right: 20px;
   }
 
-  .main-background {
+  .about-background {
     left: 65vw;
   }
 
@@ -714,17 +734,17 @@ main {
     font-size: 30px
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 0;
     left: -15vw;
     transform: scale(0.6) rotate(-16deg);
   }
 
-  .about {
-    margin: 250px 0 340px;
+  .contact {
+    margin: 150px 0 340px;
   }
 
-  .about-background {
+  .contact-background {
     margin: 250px 0;
   }
 
@@ -732,23 +752,23 @@ main {
 }
 
 @media (max-width: 980px) {
-  .about {
-    margin: 200px 0 400px;
+  .contact {
+    margin: 100px 0 400px;
   }
 
-  .about-background {
+  .contact-background {
     margin: 200px 0;
   }
 
-  .about-content{
+  .contact-content{
     justify-content: center;
   }
 
-  .about-content__info{
+  .contact-content__info{
     margin-right: 0;
   }
 
-  .about-card-background{
+  .contact-card-background{
     position: absolute;
     top: 0;
     right: 0;
@@ -757,13 +777,13 @@ main {
     z-index: -1;
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 220px;
     left: -20vw;
     transform: scale(0.6) rotate(50deg);
   }
 
-  .about-background__bowl2{
+  .contact-background__bowl2{
     visibility: visible;
     position: absolute;
     top: 100px;
@@ -771,43 +791,43 @@ main {
     transform: scale(0.6) rotate(-120deg);
   }
 
-  .about-card-image3{
+  .contact-card-image3{
     top: -30PX;
     left: -20px;
     transform: rotate(40deg);
   }
 
-  .about-content__info h2{
+  .contact-content__info h2{
     text-align: center;
     color: #fff;
     padding-top: 20px;
     font-size: 32px;
   }
 
-  .about-content__info p{
+  .contact-content__info p{
     text-align: center;
     color: #CCCCCC;
     font-size: 20px;
   }
-  //.about-content__info p:nth-child(2){
+  //.contact-content__info p:nth-child(2){
   //  margin: 20px 0 10px;
   //}
-  //.about-content__info p:nth-child(3){
+  //.contact-content__info p:nth-child(3){
   //  margin: 0;
   //}
-  //.about-content__info p:nth-child(4){
+  //.contact-content__info p:nth-child(4){
   //  margin: 30px 0 10px;
   //}
-  //.about-content__info strong{
+  //.contact-content__info strong{
   //  margin-bottom: 0;
   //}
 
-  .about-content__info p:last-child{
+  .contact-content__info p:last-child{
     margin-top: 0;
     color: #fff;
     font-size: 26px;
   }
-  .about-content__info a{
+  .contact-content__info a{
     color: #fff;
     font-size: 26px;
   }
@@ -827,7 +847,7 @@ main {
     margin: 0 auto;
   }
 
-  .main-content {
+  .about-content {
     max-width: 470px;
     margin: 0 auto;
   }
@@ -844,7 +864,7 @@ main {
     justify-content: space-evenly;
   }
 
-  .main-content__title{
+  .about-content__title{
     line-height: 57px;
     font-size: 50px;
     margin-bottom: 104px;
@@ -866,7 +886,7 @@ main {
     color: #fff;
   }
 
-  .main-background{
+  .about-background{
     left: 64vw;
   }
 
@@ -886,20 +906,20 @@ main {
     gap: 20px;
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 290px;
     left: 3vw;
     transform: scale(0.5);
   }
 
-  .about-card-background{
+  .contact-card-background{
     top: 0;
     left: 0;
     margin: 0 auto;
     max-width: 460px;
   }
 
-  .about-background__bowl2{
+  .contact-background__bowl2{
     visibility: hidden;
   }
 
@@ -908,7 +928,7 @@ main {
 
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 768PX    --  --  --  --  --  *//
 @media (max-width: 768px) {
-  .main-content__title{
+  .about-content__title{
     font-size: 50px;
   }
   .lending-container {
@@ -945,13 +965,13 @@ main {
     left: 68px;
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 300px;
     left: -2vw;
     transform: scale(0.5);
   }
 
-  .about-card-background{
+  .contact-card-background{
     position: absolute;
     top: 0;
     left: 0;
@@ -962,7 +982,7 @@ main {
     z-index: -1;
   }
 
-  .main-background{
+  .about-background{
     top: 314px;
     left: 63vw;
   }
@@ -975,10 +995,43 @@ main {
   body {
     padding: 0 20px;
   }
+
   .lending-container {
     width: 100%;
     padding: 0 20px;
     margin: 0 auto;
+  }
+
+  .header-content__logo {
+    height: 32px;
+    margin-right: 170px;
+  }
+
+  .header-background{
+    top: 20px;
+    left: -40vw;
+    transform: scale(0.45);
+  }
+
+  .header-background__banner{
+    top: -430px;
+    left: 70vw;
+  }
+
+  .sheet2{
+    top: 646px;
+    left: 542px;
+    width: 258px;
+    height: 255px;
+    transform: scale(0.7);
+  }
+
+  .sheet1{
+    top: 550px;
+    left: 592px;
+    width: 261px;
+    height: 260px;
+    transform: scale(0.7);
   }
 
   header {
@@ -1020,7 +1073,14 @@ main {
     left: 5vw;
   }
 
-  .main-content__buttons{
+  //.strawberry{
+  //  top: 67px;
+  //  left: -122px;
+  //  width: 200px;
+  //  height: 270px;
+  //}
+
+  .about-content__buttons{
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -1046,7 +1106,7 @@ main {
     display: none;
   }
 
-  .about-card-background{
+  .contact-card-background{
     position: absolute;
     top: 0;
     left: 0;
@@ -1057,13 +1117,13 @@ main {
     z-index: -1;
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 300px;
     left: -5vw;
     transform: scale(0.5);
   }
 
-  .main-content__title{
+  .about-content__title{
     width: 325px
   }
 
@@ -1072,12 +1132,14 @@ main {
 
 @media (max-width: 576px) {
   main {
-    margin-top: 320px;
+    margin-top: 280px;
   }
 
-  .main-content__title{
+  .about-content__title{
     margin-left: 10px;
-    font-size: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 44px;
   }
 
 
@@ -1105,7 +1167,7 @@ main {
     margin: 30px;
   }
 
-  .main-content, .advantages-content__title {
+  .about-content, .advantages-content__title {
     font-size: 24px;
     max-width: 540px;
     width: 100%;
@@ -1122,13 +1184,13 @@ main {
     transform: rotate(-6deg);
   }
 
-  .about-background__bowl{
+  .contact-background__bowl{
     top: 300px;
     left: -14vw;
     transform: scale(0.4);
   }
 
-  .main-background {
+  .about-background {
     left: 60vw;
   }
 }
@@ -1136,7 +1198,7 @@ main {
 //*  --  --  --  --  --    MEDIA MAX-WIDTH 360PX    --  --  --  --  --  *//
 @media (max-width: 364px) {
 
-  .about-card-background{
+  .contact-card-background{
       border-radius: 34px;
   }
 
@@ -1149,7 +1211,7 @@ main {
     text-align: center;
   }
 
-  .main-background {
+  .about-background {
     left: 60vw;
   }
 
