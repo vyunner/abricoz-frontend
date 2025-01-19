@@ -25,10 +25,10 @@
       <!-- Content Section -->
       <section class="content">
         <div class="text-content">
-          <div class="text-content__title" >Супермаркет с бесплатной доставкой</div>
+          <div class="text-content__title" >Онлайн-супермаркет с бесплатной доставкой</div>
           <div class="app-buttons">
-            <a href="https://play.google.com/store/games?hl=ru&pli=1" target="_blank"><img style="width: 203px; height: 60px" src="@/assets/images/google%20play.png" alt="Google Play" /></a>
-            <a href="https://www.apple.com/app-store/" target="_blank"><img style="width: 180px; height: 60px; margin-left: 10px;" src="@/assets/images/app%20store.png" alt="App Store" /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.abricoz.app&hl=ru" target="_blank"><img style="width: 203px; height: 60px" src="@/assets/images/google%20play.png" alt="Google Play" /></a>
+            <a href="https://apps.apple.com/kz/app/abricoz-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2/id6670238244" target="_blank"><img style="width: 180px; height: 60px; margin-left: 10px;" src="@/assets/images/app%20store.png" alt="App Store" /></a>
           </div>
         </div>
 
@@ -151,7 +151,6 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import '../assets/css/lending-style/lending.scss'
 
 export default {
   name: 'HomeView',
