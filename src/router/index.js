@@ -16,13 +16,14 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: import('@/views/HomePage.vue'),
+        component: () => import('@/views/HomePage.vue'),
     },
     {
         path: '/admin',
         name: 'admin',
         component: AdminView,
-        children: [
+        children:
+        [
             {
                 path: 'user/get-users-with-roles',
                 name: 'user/get-users-with-roles',

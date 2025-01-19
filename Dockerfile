@@ -1,8 +1,13 @@
 # build environment
 FROM node:22-alpine as build
 WORKDIR /app
+
+# Добавляем ARG и ENV
+ARG BASE_URL=/
+ENV VUE_APP_BASE_URL=$BASE_URL
+
 COPY . .
-RUN yarn
+RUN yarn install
 RUN yarn build
 
 # production environment
