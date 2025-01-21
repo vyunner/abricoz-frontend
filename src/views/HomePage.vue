@@ -6,6 +6,7 @@ export default {
   components: {PrimePreloader},
   data() {
     return {
+      isMenuOpen: false,
       isLoading: true, // Состояние прелоадера
     };
   },
@@ -31,6 +32,30 @@ export default {
         }
       });
     },
+
+    // toggleMenu() {
+    //   const menu = document.getElementById('menuOverlay');
+    //   menu.classList.toggle('active');
+    // },
+
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen; // Переключаем состояние
+
+      if (this.isMenuOpen) {
+        const menu = document.getElementById('menuOverlay');
+        menu.classList.toggle('active');
+      } else {
+        this.closeMenu()
+      }
+    },
+
+    closeMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+
+      const menu = document.getElementById('menuOverlay');
+      menu.classList.remove('active');
+    }
+
   },
 
   mounted() {
@@ -64,18 +89,22 @@ export default {
 
           <img class="header-content__logo" src="@/assets/images/logo.svg" alt="">
 
-          <nav>
-            <a href="#">Главная</a>
-            <a href="#header"> О нас</a>
-            <a href="#advantages">Преимущества</a>
-            <a href="#contact" > Контакты</a>
+          <nav class="header-content__menu" id="menuOverlay">
+            <a @click="closeMenu" href="#">Главная</a>
+            <a @click="closeMenu" href="#header"> О нас</a>
+            <a @click="closeMenu" href="#advantages">Преимущества</a>
+            <a @click="closeMenu" href="#contact" > Контакты</a>
           </nav>
 
-          <div class="header-content__burger">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="menu-wrapper" @click="toggleMenu">
+            <div class="hamburger-menu" :class="{ animate: isMenuOpen }"></div>
           </div>
+
+<!--          <div class="header-content__burger" @click="toggleMenu">-->
+<!--            <span></span>-->
+<!--            <span></span>-->
+<!--            <span></span>-->
+<!--          </div>-->
 
         </div>
 
@@ -232,6 +261,16 @@ export default {
 *{
   font-family: 'Unbounded', Arial, sans-serif;
 }
+
+
+$bar-width: 28px;
+$bar-height: 3px;
+$bar-spacing: 8px;
+
+body {
+  background: #F44336;
+}
+
 
 html, body {
   font-size: 20px !important;
@@ -1085,9 +1124,91 @@ main {
     justify-content: space-between;
   }
 
-  .header-content nav{
+  .header-content__menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    padding-top: 60% ;
+    width: 100%;
+    height: 100%;
+    background-color: #396c03;
     display: none;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+    gap: 20px;
+    color: white;
   }
+
+  .header-content__menu a{
+    margin: 0;
+    color: #fff;
+  }
+
+  .header-content nav.active {
+    display: flex;
+  }
+
+  .menu-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 30px 20px;
+    width: $bar-width;
+    height: $bar-height + $bar-spacing*2;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .hamburger-menu,
+  .hamburger-menu:after,
+  .hamburger-menu:before {
+    width: $bar-width;
+    height: $bar-height;
+  }
+
+  .hamburger-menu {
+    position: relative;
+    transform: translateY($bar-spacing);
+    background: rgba(255, 255, 255, 1);
+    transition: all 0ms 300ms;
+
+    &.animate {
+      background: rgba(255, 255, 255, 0);
+    }
+  }
+
+  .hamburger-menu:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: $bar-spacing;
+    background: rgba(255, 255, 255, 1);
+    transition: bottom 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .hamburger-menu:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: $bar-spacing;
+    background: rgba(255, 255, 255, 1);
+    transition: top 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .hamburger-menu.animate:after {
+    top: 0;
+    transform: rotate(45deg);
+    transition: top 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);;
+  }
+
+  .hamburger-menu.animate:before {
+    bottom: 0;
+    transform: rotate(-45deg);
+    transition: bottom 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);;
+  }
+
 
   .header-content__burger{
     display: flex;
