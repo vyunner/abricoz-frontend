@@ -41,8 +41,8 @@ export default {
 </script>
 
 <template>
-  <div style="display: flex; justify-content: center; padding-top: 100px">
-    <PrimePreloader v-if="isLoading"/>
+  <div v-if="isLoading" style="display: flex; justify-content: center; padding-top: 100px">
+    <PrimePreloader />
   </div>
 
   <div v-show="!isLoading">
