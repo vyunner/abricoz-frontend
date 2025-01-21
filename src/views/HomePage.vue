@@ -1,189 +1,230 @@
 <script>
+
+import PrimePreloader from "@/components/common/PrimePreloader.vue";
 export default {
   name: "HomePage",
+  components: {PrimePreloader},
+  data() {
+    return {
+      isLoading: true, // Состояние прелоадера
+    };
+  },
+  methods: {
+    loadImages() {
+      // Находим все изображения на странице
+      const images = Array.from(document.querySelectorAll('img'));
+      let loadedImages = 0;
+
+      const checkAllImagesLoaded = () => {
+        loadedImages += 1;
+        if (loadedImages === images.length) {
+          this.isLoading = false; // Убираем прелоадер
+        }
+      };
+
+      images.forEach((img) => {
+        if (img.complete) {
+          checkAllImagesLoaded();
+        } else {
+          img.addEventListener('load', checkAllImagesLoaded);
+          img.addEventListener('error', checkAllImagesLoaded);
+        }
+      });
+    },
+  },
+
+  mounted() {
+    this.loadImages();
+  },
+
 }
 </script>
 
 <template>
+  <div style="display: flex; justify-content: center; padding-top: 100px">
+    <PrimePreloader v-if="isLoading"/>
+  </div>
 
-  <section class="header-background">
-    <div class="header-background__basket">
-      <img class="strawberry" src="@/assets/images/strawberry.png" alt=""/>
-      <img class="sheet3" src="@/assets/images/sheet3.png" alt=""/>
-      <img class="basket" src="@/assets/images/fruit%20basket.png" alt=""/>
-      <img class="sheet2" src="@/assets/images/sheet2.png" alt=""/>
-      <img class="sheet1" src="@/assets/images/sheet1.png" alt=""/>
-    </div>
-    <img class="header-background__banner" src="@/assets/images/banner%20background.png" alt=""/>
-  </section>
+  <div v-show="!isLoading">
+    <section class="header-background">
+      <div class="header-background__basket">
+        <img class="strawberry" src="@/assets/images/strawberry.png" alt=""/>
+        <img class="sheet3" src="@/assets/images/sheet3.png" alt=""/>
+        <img class="basket" src="@/assets/images/fruit%20basket.png" alt=""/>
+        <img class="sheet2" src="@/assets/images/sheet2.png" alt=""/>
+        <img class="sheet1" src="@/assets/images/sheet1.png" alt=""/>
+      </div>
+      <img class="header-background__banner" src="@/assets/images/banner%20background.png" alt=""/>
+    </section>
 
-  <header id="header">
-    <div class="lending-container">
+    <header id="header">
+      <div class="lending-container">
 
-      <div class="header-content">
+        <div class="header-content">
 
-        <img class="header-content__logo" src="@/assets/images/logo.svg" alt="">
+          <img class="header-content__logo" src="@/assets/images/logo.svg" alt="">
 
-        <nav>
-          <a href="#">Главная</a>
-          <a href="#header"> О нас</a>
-          <a href="#advantages">Преимущества</a>
-          <a href="#contact" > Контакты</a>
-        </nav>
+          <nav>
+            <a href="#">Главная</a>
+            <a href="#header"> О нас</a>
+            <a href="#advantages">Преимущества</a>
+            <a href="#contact" > Контакты</a>
+          </nav>
 
-        <div class="header-content__burger">
-          <span></span>
-          <span></span>
-          <span></span>
+          <div class="header-content__burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
         </div>
 
       </div>
+    </header>
 
-    </div>
-  </header>
+    <section class="about-background">
+      <img class="arrow" src="@/assets/images/arrow.svg" alt="">
+      <img class="arrow-phone" src="@/assets/images/arrow-phone.svg" alt="">
+      <img class="stars" src="@/assets/images/stars.svg" alt="">
+    </section>
 
-  <section class="about-background">
-    <img class="arrow" src="@/assets/images/arrow.svg" alt="">
-    <img class="arrow-phone" src="@/assets/images/arrow-phone.svg" alt="">
-    <img class="stars" src="@/assets/images/stars.svg" alt="">
-  </section>
+    <main>
 
-  <main>
+      <div class="lending-container">
 
-    <div class="lending-container">
+        <div class="about-content">
+          <div class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</div>
 
-      <div class="about-content">
-        <div class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</div>
-
-        <div class="about-content__buttons">
-          <a href="https://play.google.com/store/games?hl=ru&pli=1" target="_blank">
-            <img class="google-play-img" src="@/assets/images/google%20play.png" alt="" />
-            <img class="google-play-img__phone" src="@/assets/images/google-play-phone.png" alt="" />
-          </a>
-          <a href="https://www.apple.com/app-store/" target="_blank">
-            <img class="app-store-img" src="@/assets/images/app%20store.png" alt="" />
-            <img class="app-store-img__phone" src="@/assets/images/app-store-phone.png" alt="" />
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
-
-
-  <section class="advantages" id="advantages">
-    <div class="lending-container">
-
-      <div class="advantages-content">
-
-        <div class="advantages-content__title">
-          Наши преимущества
-        </div>
-
-        <div class="advantages-content__cards">
-
-          <div class="advantages-content__card">
-            <div class="advantages-content__card-icon" >
-              <img src="@/assets/images/clock.svg" alt="">
-            </div>
-            <div class="advantages-content__card-content">
-              <h2 class="advantages-content__card-title">Экономия вашего времени</h2>
-              <p class="advantages-content__card-text">Вам больше не придется тратить свое время на длительный поход в супермаркет. Доставим прямо до двери вашей квартиры.</p>
-            </div>
-          </div>
-
-          <div class="advantages-content__card">
-            <div class="advantages-content__card-icon">
-              <img style="transform: rotate(35deg);" src="@/assets/images/tag.png" alt="">
-            </div>
-            <div class="advantages-content__card-content">
-              <h2 class="advantages-content__card-title">Доступные цены</h2>
-              <p class="advantages-content__card-text">Ваши любимые продукты по ценам, которые радуют.</p>
-            </div>
-          </div>
-
-          <div class="advantages-content__card">
-            <div class="advantages-content__card-icon">
-              <img src="@/assets/images/lending-sheets.svg" alt="">
-            </div>
-            <div class="advantages-content__card-content">
-              <h2 class="advantages-content__card-title">Свежесть продуктов</h2>
-              <p class="advantages-content__card-text">Мы бережно собираем ваш заказ перед доставкой, внимательно проверяя срок годности и свежесть.</p>
-            </div>
-          </div>
-
-          <div class="advantages-content__card">
-            <div class="advantages-content__card-icon">
-              <img src="@/assets/images/gift.svg" alt="">
-            </div>
-            <div class="advantages-content__card-content">
-              <h2 class="advantages-content__card-title">Бесплатная доставка</h2>
-              <p class="advantages-content__card-text">Мы доставим ваш заказ бесплатно, без скрытых комиссий. <br> <br>Рабочие часы с 9:00 до 22:00.</p>
-            </div>
+          <div class="about-content__buttons">
+            <a href="https://play.google.com/store/games?hl=ru&pli=1" target="_blank">
+              <img class="google-play-img" src="@/assets/images/google%20play.png" alt="" />
+              <img class="google-play-img__phone" src="@/assets/images/google-play-phone.png" alt="" />
+            </a>
+            <a href="https://www.apple.com/app-store/" target="_blank">
+              <img class="app-store-img" src="@/assets/images/app%20store.png" alt="" />
+              <img class="app-store-img__phone" src="@/assets/images/app-store-phone.png" alt="" />
+            </a>
           </div>
 
         </div>
 
       </div>
 
-    </div>
-  </section>
+    </main>
 
-  <section id="contact" style="margin-top: 100px;"></section>
 
-  <section class="contact-background">
-    <div class="contact-background">
-      <div class="contact-card-background">
+    <section class="advantages" id="advantages">
+      <div class="lending-container">
+
+        <div class="advantages-content">
+
+          <div class="advantages-content__title">
+            Наши преимущества
+          </div>
+
+          <div class="advantages-content__cards">
+
+            <div class="advantages-content__card">
+              <div class="advantages-content__card-icon" >
+                <img src="@/assets/images/clock.svg" alt="">
+              </div>
+              <div class="advantages-content__card-content">
+                <h2 class="advantages-content__card-title">Экономия вашего времени</h2>
+                <p class="advantages-content__card-text">Вам больше не придется тратить свое время на длительный поход в супермаркет. Доставим прямо до двери вашей квартиры.</p>
+              </div>
+            </div>
+
+            <div class="advantages-content__card">
+              <div class="advantages-content__card-icon">
+                <img style="transform: rotate(35deg);" src="@/assets/images/tag.png" alt="">
+              </div>
+              <div class="advantages-content__card-content">
+                <h2 class="advantages-content__card-title">Доступные цены</h2>
+                <p class="advantages-content__card-text">Ваши любимые продукты по ценам, которые радуют.</p>
+              </div>
+            </div>
+
+            <div class="advantages-content__card">
+              <div class="advantages-content__card-icon">
+                <img src="@/assets/images/lending-sheets.svg" alt="">
+              </div>
+              <div class="advantages-content__card-content">
+                <h2 class="advantages-content__card-title">Свежесть продуктов</h2>
+                <p class="advantages-content__card-text">Мы бережно собираем ваш заказ перед доставкой, внимательно проверяя срок годности и свежесть.</p>
+              </div>
+            </div>
+
+            <div class="advantages-content__card">
+              <div class="advantages-content__card-icon">
+                <img src="@/assets/images/gift.svg" alt="">
+              </div>
+              <div class="advantages-content__card-content">
+                <h2 class="advantages-content__card-title">Бесплатная доставка</h2>
+                <p class="advantages-content__card-text">Мы доставим ваш заказ бесплатно, без скрытых комиссий. <br> <br>Рабочие часы с 9:00 до 22:00.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
-      <div class="contact-background__bowl">
-        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
-        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
-        <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
-      </div>
-      <div class="contact-background__bowl2">
-        <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
-        <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
-        <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
-      </div>
-    </div>
-  </section>
+    </section>
 
+    <section id="contact" style="margin-top: 100px;"></section>
 
-  <section class="contact">
-    <div class="lending-container">
-      <div class="contact-content">
-        <div class="contact-content__info">
-          <h2>Контакты</h2>
-          <p><strong>Email:</strong></p>
-          <p><a href="#">info@abricoz.kz</a></p>
-          <p><strong>Номер телефона:</strong></p>
-          <p>+7 777 040 44 99 <br> +7 702 620 74 47</p>
+    <section class="contact-background">
+      <div class="contact-background">
+        <div class="contact-card-background">
+
+        </div>
+        <div class="contact-background__bowl">
+          <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
+          <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
+          <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
+        </div>
+        <div class="contact-background__bowl2">
+          <img src="@/assets/images/sheet%202%20p3.png" alt="" class="contact-card-image3">
+          <img src="@/assets/images/sheet%201%20p3.png" alt="" class="contact-card-image2">
+          <img src="@/assets/images/fruit%20bowl.png" alt="" class="contact-card-image1">
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
 
-  <footer class="footer" id="footer">
-    <div class="lending-container">
-      <div class="lending-footer__content">
-        <div class="lending-footer__img">
-          <img src="@/assets/images/footer-logo.svg" alt="Footer Logo" >
-        </div>
-
-        <div class="lending-footer__img">
-          <img src="@/assets/images/inst-logo.svg" alt="Inst Logo" >
-        </div>
-
-        <div class="lending-footer__text" style="color: #fff">
-          © 2024 Abricoz. Все права защищены.
+    <section class="contact">
+      <div class="lending-container">
+        <div class="contact-content">
+          <div class="contact-content__info">
+            <h2>Контакты</h2>
+            <p><strong>Email:</strong></p>
+            <p><a href="#">info@abricoz.kz</a></p>
+            <p><strong>Номер телефона:</strong></p>
+            <p>+7 777 040 44 99 <br> +7 702 620 74 47</p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </section>
+
+
+    <footer class="footer" id="footer">
+      <div class="lending-container">
+        <div class="lending-footer__content">
+          <div class="lending-footer__img">
+            <img src="@/assets/images/footer-logo.svg" alt="Footer Logo" >
+          </div>
+
+          <div class="lending-footer__img">
+            <img src="@/assets/images/inst-logo.svg" alt="Inst Logo" >
+          </div>
+
+          <div class="lending-footer__text" style="color: #fff">
+            © 2024 Abricoz. Все права защищены.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
 </template>
 

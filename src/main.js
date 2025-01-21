@@ -30,6 +30,7 @@ import InputNumber from 'primevue/inputnumber';
 import ToggleButton from 'primevue/togglebutton';
 import TextArea from 'primevue/textarea';
 import FileUpload from 'primevue/fileupload';
+import ProgressSpinner from 'primevue/progressspinner';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -68,5 +69,6 @@ app.component('Image', Image)
 app.component('AutoComplete', AutoComplete)
 app.component('ToggleButton', ToggleButton)
 app.component('FileUpload', FileUpload)
+app.component('ProgressSpinner', ProgressSpinner)
 
 app.mount('#app');
