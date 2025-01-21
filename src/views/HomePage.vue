@@ -53,10 +53,6 @@ export default {
       });
     },
 
-    // toggleMenu() {
-    //   const menu = document.getElementById('menuOverlay');
-    //   menu.classList.toggle('active');
-    // },
 
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen; // Переключаем состояние
@@ -64,14 +60,15 @@ export default {
       if (this.isMenuOpen) {
         const menu = document.getElementById('menuOverlay');
         menu.classList.toggle('active');
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
       } else {
         this.closeMenu()
+        document.body.style.position = '';
       }
     },
 
     closeMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-
       const menu = document.getElementById('menuOverlay');
       menu.classList.remove('active');
     }
@@ -115,6 +112,10 @@ export default {
             <a @click="closeMenu" href="#advantages">Преимущества</a>
             <a @click="closeMenu" href="#contact" > Контакты</a>
           </nav>
+          <div class="header-content__instagram-icon" v-if="isMenuOpen">
+            <a href="https://www.instagram.com/abricoz_kz/" target="_blank">
+              <img src="@/assets/images/inst-logo.svg" alt="" ></a>
+          </div>
 
           <div class="menu-wrapper" @click="toggleMenu">
             <div class="hamburger-menu" :class="{ animate: isMenuOpen }"></div>
@@ -259,12 +260,13 @@ export default {
     <footer class="footer" id="footer">
       <div class="lending-container">
         <div class="lending-footer__content">
-          <div class="lending-footer__img">
-            <img src="@/assets/images/footer-logo.svg" alt="Footer Logo" >
+          <div class="lending-footer__img1">
+            <img src="@/assets/images/footer-logo.svg" alt="" >
           </div>
 
-          <div class="lending-footer__img">
-            <img src="@/assets/images/inst-logo.svg" alt="Inst Logo" >
+          <div class="lending-footer__img2">
+            <a href="https://www.instagram.com/abricoz_kz/" target="_blank">
+              <img src="@/assets/images/inst-logo.svg" alt="" ></a>
           </div>
 
           <div class="lending-footer__text" style="color: #fff">
@@ -289,12 +291,12 @@ $bar-spacing: 8px;
 
 body {
   background: #F44336;
+  transition: overflow 0.3s;
 }
 
 
 html, body {
   font-size: 20px !important;
-  overflow: auto;
   margin: 0;
   padding: 0;
 }
@@ -1170,6 +1172,29 @@ main {
     display: flex;
   }
 
+  .lending-footer__img1 {
+    transform: scale(0.8);
+  }
+
+  .lending-footer__img2 {
+    transform: scale(0.9);
+  }
+
+  .header-content__instagram-icon {
+    position: fixed;
+    left: 0;
+    bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .header-content__instagram-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
   .menu-wrapper {
     position: absolute;
     top: 0;
@@ -1387,6 +1412,8 @@ main {
   .footer {
     padding: 40px 0;
   }
+
+
 
   .lending-footer__text{
     font-size: 14px;
