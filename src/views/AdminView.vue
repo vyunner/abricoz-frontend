@@ -1,5 +1,5 @@
 <template>
-  <PrimePreloader class="col-12 md:col-8" v-if="loading"/>
+<!--  <PrimePreloader class="col-12 md:col-8" v-if="loading"/>-->
 
   <Header />
   <router-view />
@@ -19,11 +19,11 @@ export default {
   },
 
   components: {Header, PrimePreloader},
-  // async mounted(){
-  //   if (!getCookie('ACCESS_TOKEN')){
-  //     this.$router.push('/auth');
-  //   }
-  // }
+  async mounted(){
+    if (!getCookie('ACCESS_TOKEN')){
+      this.$router.push('/auth');
+    }
+  }
 }
 
 
