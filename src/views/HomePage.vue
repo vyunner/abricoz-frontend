@@ -1,9 +1,9 @@
 <script>
 
-import PrimePreloader from "@/components/common/PrimePreloader.vue";
+import HomePagePreloader from "@/components/common/HomePagePreloader.vue";
 export default {
   name: "HomePage",
-  components: {PrimePreloader},
+  components: {HomePagePreloader},
   data() {
     return {
       isMenuOpen: false,
@@ -11,15 +11,35 @@ export default {
     };
   },
   methods: {
-    loadImages() {
+    waitForImages() {
+      const minimumLoadingTime = new Promise((resolve) => {
+        setTimeout(resolve, 1300); // Минимальное время отображения прелоадера (2 секунды)
+      });
+
+      const imagesLoaded = new Promise((resolve) => {
+        this.loadImages(resolve); // Проверка загрузки всех изображений
+      });
+
+      Promise.all([minimumLoadingTime, imagesLoaded]).then(() => {
+        this.isLoading = false; // Убираем прелоадер, когда оба условия выполнены
+      });
+    },
+
+    loadImages(onAllImagesLoaded) {
       // Находим все изображения на странице
       const images = Array.from(document.querySelectorAll('img'));
+      if (images.length === 0) {
+        // Если изображений нет, сразу вызываем callback
+        onAllImagesLoaded();
+        return;
+      }
+
       let loadedImages = 0;
 
       const checkAllImagesLoaded = () => {
         loadedImages += 1;
         if (loadedImages === images.length) {
-          this.isLoading = false; // Убираем прелоадер
+          onAllImagesLoaded(); // Все изображения загружены
         }
       };
 
@@ -59,7 +79,7 @@ export default {
   },
 
   mounted() {
-    this.loadImages();
+    this.waitForImages();
   },
 
 }
@@ -67,7 +87,7 @@ export default {
 
 <template>
   <div v-if="isLoading" style="display: flex; justify-content: center; padding-top: 100px">
-    <PrimePreloader />
+    <HomePagePreloader />
   </div>
 
   <div v-show="!isLoading">

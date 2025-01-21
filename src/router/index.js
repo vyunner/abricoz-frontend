@@ -9,6 +9,11 @@ const routes = [
         component: () => import('@/views/HomePage.vue'),
     },
     {
+        path: '/preloader',
+        name: 'preloader',
+        component: () => import('@/components/common/HomePagePreloader.vue'),
+    },
+    {
         path: '/admin',
         name: 'admin',
         component: AdminView,
