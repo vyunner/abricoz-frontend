@@ -63,12 +63,16 @@ export default {
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
       } else {
-        this.closeMenu()
+        const menu = document.getElementById('menuOverlay');
+        menu.classList.remove('active');
         document.body.style.position = '';
       }
     },
 
     closeMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+
+      document.body.style.position = '';
       const menu = document.getElementById('menuOverlay');
       menu.classList.remove('active');
     }
