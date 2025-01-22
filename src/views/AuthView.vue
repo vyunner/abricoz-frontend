@@ -72,7 +72,7 @@ export default {
           life: 3000
         });
 
-        this.$router.push('/');
+        this.$router.push('/admin');
       } else {
         this.$toast.add({
           severity: 'warn',

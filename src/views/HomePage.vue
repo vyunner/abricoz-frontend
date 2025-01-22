@@ -70,8 +70,7 @@ export default {
     },
 
     closeMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-
+      this.isMenuOpen = false
       document.body.style.position = '';
       const menu = document.getElementById('menuOverlay');
       menu.classList.remove('active');
@@ -96,7 +95,7 @@ export default {
       <div class="header-background__basket">
         <img class="strawberry" src="@/assets/images/strawberry.png" alt=""/>
         <img class="sheet3" src="@/assets/images/sheet3.png" alt=""/>
-        <img class="basket" src="@/assets/images/fruit%20basket.png" alt=""/>
+        <img class="basket" src="@/assets/images/fruit%20basketv2.png" alt=""/>
         <img class="sheet2" src="@/assets/images/sheet2.png" alt=""/>
         <img class="sheet1" src="@/assets/images/sheet1.png" alt=""/>
       </div>
@@ -150,11 +149,11 @@ export default {
           <div class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</div>
 
           <div class="about-content__buttons">
-            <a href="https://play.google.com/store/games?hl=ru&pli=1" target="_blank">
+            <a href="https://play.google.com/store/apps/details?id=com.abricoz.app&hl=ru" target="_blank">
               <img class="google-play-img" src="@/assets/images/google%20play.png" alt="" />
               <img class="google-play-img__phone" src="@/assets/images/google-play-phone.png" alt="" />
             </a>
-            <a href="https://www.apple.com/app-store/" target="_blank">
+            <a href="https://apps.apple.com/kz/app/abricoz-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2/id6670238244" target="_blank">
               <img class="app-store-img" src="@/assets/images/app%20store.png" alt="" />
               <img class="app-store-img__phone" src="@/assets/images/app-store-phone.png" alt="" />
             </a>
