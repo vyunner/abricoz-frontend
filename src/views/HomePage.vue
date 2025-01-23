@@ -622,8 +622,11 @@ main {
   position: absolute;
   background-color: #195a00;
   border-radius: 50px;
+  margin: 0 auto;
   top: 0;
-  right: 10vw;
+  right: 0;
+  left: 0;
+  bottom: 0;
   width: 1560px;
   height: 369px;
   z-index: -1;
