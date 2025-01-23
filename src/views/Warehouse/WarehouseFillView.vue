@@ -11,8 +11,8 @@
       </div>
 
       <div v-if="activeTab === 1" class="input-group">
-        <Dropdown v-model="searchSubCategoryId" optionLabel="name_ru" optionValue="id" :options="subcategories"
-            placeholder="Укажите подкатегории"  @keyup.enter="onSearchBySubCategory"/>
+        <Dropdown class="input-group__dropdown" v-model="searchSubCategoryId" optionLabel="name_ru" optionValue="id" :options="subcategories"
+            placeholder="Укажите подкатегорию"  @keyup.enter="onSearchBySubCategory"/>
         <Button label="Поиск" icon="pi pi-search" @click="onSearchBySubCategory" :loading="loading"/>
       </div>
 
@@ -310,10 +310,6 @@ export default {
         {label: 'Поиск по названию'},
         {label: 'Поиск по подкатегории'},
       ],
-      items: [
-        {id: 1, label: 'Поиск по названию'},
-        {id: 2, label: 'Поиск по подкатегорию'},
-      ],
       editedProduct: {},
       editProductVisible: false,
       editWarehouseVisible: false,
@@ -481,7 +477,7 @@ export default {
       } else {
         const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId);
         if (result) {
-          this.products = result;
+          this.products = result.products;
         } else {
           this.$toast.add({
             severity: "error",
@@ -637,6 +633,10 @@ export default {
 
 .input-group {
   margin: 20px 0;
+}
+
+.input-group__dropdown{
+  width: 230px;
 }
 
 .text {
