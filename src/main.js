@@ -12,6 +12,7 @@ import 'primeicons/primeicons.css';
 
 import Button from 'primevue/button';
 import Menu from 'primevue/menu';
+import TabMenu from 'primevue/tabmenu';
 import Menubar from 'primevue/menubar';
 import Sidebar from 'primevue/sidebar';
 import FocusTrap from 'primevue/focustrap';
@@ -49,6 +50,7 @@ app.directive('focustrap', FocusTrap);
 
 app.component('Button', Button)
 app.component('Menu', Menu)
+app.component('TabMenu', TabMenu)
 app.component('Menubar', Menubar)
 app.component('Sidebar', Sidebar)
 app.component('IconField', IconField)

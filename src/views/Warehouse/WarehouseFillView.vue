@@ -1,11 +1,19 @@
 <template>
   <div class="container">
     <div class="main">
-      <div class="input-group">
+      <TabMenu v-model:activeIndex="activeTab" :model="tabMenuItems"/>
+
+      <div v-if="activeTab === 0" class="input-group">
         <InputText placeholder="Введите название..." v-model="searchTerm" @keyup.enter="onSearch"/>
         <Button label="Поиск" icon="pi pi-search" @click="onSearch" :loading="loading"/>
         <Button label="Создать" icon="pi pi-plus-circle" :style="{ margin: '0 0 0 10px' }"
                 @click="createProductVisible = true" severity="success" :loading="loading"/>
+      </div>
+
+      <div v-if="activeTab === 1" class="input-group">
+        <Dropdown v-model="searchSubCategoryId" optionLabel="name_ru" optionValue="id" :options="subcategories"
+            placeholder="Укажите подкатегорию"  @keyup.enter="onSearchBySubCategory"/>
+        <Button label="Поиск" icon="pi pi-search" @click="onSearchBySubCategory" :loading="loading"/>
       </div>
 
       <DataTable v-if="products.length" :value="products" class="dataTable" tableStyle="min-width: 50rem" showGridlines
@@ -292,10 +300,20 @@ export default {
   name: "WarehouseSearchView",
   data() {
     return {
+      activeTab: 0,
       amountChange: 0,
       adjustAmount: 0,
       searchTerm: "",
+      searchSubCategoryId: null,
       products: [],
+      tabMenuItems: [
+        {label: 'Поиск по названию'},
+        {label: 'Поиск по подкатегорию'},
+      ],
+      items: [
+        {id: 1, label: 'Поиск по названию'},
+        {id: 2, label: 'Поиск по подкатегорию'},
+      ],
       editedProduct: {},
       editProductVisible: false,
       editWarehouseVisible: false,
@@ -452,6 +470,28 @@ export default {
       this.editWarehouseVisible = false;
       this.loading = false;
     },
+    async onSearchBySubCategory() {
+      this.loading = true;
+      if (!this.searchSubCategoryId) {
+        this.$toast.add({
+          severity: "warn",
+          summary: "Предупреждение",
+          detail: "Укажите подкатегорию товара для поиска",
+        });
+      } else {
+        const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId);
+        if (result) {
+          this.products = result;
+        } else {
+          this.$toast.add({
+            severity: "error",
+            summary: "Ошибка",
+            detail: "Ошибка при поиске товаров",
+          });
+        }
+      }
+      this.loading = false;
+    },
     async onSearch() {
       this.loading = true;
       if (this.searchTerm.trim() === "") {
@@ -596,7 +636,7 @@ export default {
 }
 
 .input-group {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .text {

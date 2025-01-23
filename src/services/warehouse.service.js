@@ -14,6 +14,28 @@ const warehouseService = {
             return false;
         }
     },
+    async searchBySubCategory(subcategory_id) {
+        try {
+            const {status, data} = await httpClient.get(`/product/index?subcategory_id[]=${subcategory_id}`,);
+            if (status === 200) {
+                return data.data;
+            }
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    },
+    async getSubcategories() {
+        try {
+            const {status, data} = await httpClient.get(`/warehouse/get-subcategories`);
+            if (status === 200) {
+                return data.data;
+            }
+        } catch (e) {
+            console.error(e);
+            return [];
+        }
+    },
     async createProduct(productData) {
         try {
             const {status, data} = await httpClient.post(`/warehouse/create-product`, productData);
@@ -52,17 +74,6 @@ const warehouseService = {
         } catch (e) {
             console.error(e);
             return false;
-        }
-    },
-    async getSubcategories() {
-        try {
-            const {status, data} = await httpClient.get(`/warehouse/get-subcategories`);
-            if (status === 200) {
-                return data.data;
-            }
-        } catch (e) {
-            console.error(e);
-            return [];
         }
     },
     async getBrands(query) {
