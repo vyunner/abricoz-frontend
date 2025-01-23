@@ -12,7 +12,7 @@
 
       <div v-if="activeTab === 1" class="input-group">
         <Dropdown v-model="searchSubCategoryId" optionLabel="name_ru" optionValue="id" :options="subcategories"
-            placeholder="Укажите подкатегорию"  @keyup.enter="onSearchBySubCategory"/>
+            placeholder="Укажите подкатегории"  @keyup.enter="onSearchBySubCategory"/>
         <Button label="Поиск" icon="pi pi-search" @click="onSearchBySubCategory" :loading="loading"/>
       </div>
 
@@ -308,7 +308,7 @@ export default {
       products: [],
       tabMenuItems: [
         {label: 'Поиск по названию'},
-        {label: 'Поиск по подкатегорию'},
+        {label: 'Поиск по подкатегории'},
       ],
       items: [
         {id: 1, label: 'Поиск по названию'},
