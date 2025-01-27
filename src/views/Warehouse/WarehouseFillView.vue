@@ -17,16 +17,33 @@
       </div>
 
       <DataTable v-if="products.length" :value="products" class="dataTable" tableStyle="min-width: 50rem" showGridlines
-                 stripedRows responsiveLayout="scroll" :loading="loading">
+                 stripedRows scrollable responsiveLayout="scroll" :loading="loading">
 
         <!-- Отображение полей продукта -->
-        <Column field="id" header="ID"></Column>
-        <Column header="Фото">
+        <Column field="id" header="ID" frozen></Column>
+        <Column header="Фото" frozen>
           <template #body="{data}">
             <Image v-if="data.photo_url" :src="'https://api.abricoz.kz' + data.photo_url" width="100" preview/>
           </template>
         </Column>
-        <Column field="name_ru" header="Название"></Column>
+        <Column field="name_ru" header="Название" frozen></Column>
+        <Column v-if="activeTab === 1" header="Описание">
+          <template #body="{data}">
+            <div class="product-description" @click="toggleText(data)">
+              <p :class="{'collapsed': data.isCollapsed}">
+                {{data.description_ru}}
+              </p>
+            </div>
+          </template>
+        </Column>
+        <Column v-if="activeTab === 1" header="Калораж">
+          <template #body="{data}">
+            <p class="text">Калории: {{ data.calories }}</p>
+            <p class="text">Белки: {{ data.proteins }}</p>
+            <p class="text">Жиры: {{ data.fats }}</p>
+            <p class="text">Углеводы: {{ data.carbohydrates }}</p>
+          </template>
+        </Column>
         <Column field="subcategory.name_ru" header="Подкатегория"></Column>
         <Column field="manufacturer" header="Производитель"></Column>
         <Column header="Цена">
@@ -36,9 +53,15 @@
             <p class="text">Цена со скидкой: {{ data.price_with_discount }} тг</p>
           </template>
         </Column>
+        <Column v-if="activeTab === 1" header="Колличество продаж">
+          <template #body="{data}">
+            <p >{{data.total_sales}} продаж</p>
+          </template>
+        </Column>
         <Column header="Осталось">
           <template #body="{data}">{{ data.amount }} x {{ data.weight }}</template>
         </Column>
+        <Column v-if="activeTab === 1" field="where" header="Полка"></Column>
         <Column header="Статус">
           <template #body="{data}">
             <p v-if="data.is_active">Да</p>
@@ -74,11 +97,6 @@
           </div>
 
           <div class="dialog__item">
-            <label>Название (EN)</label>
-            <InputText v-model="editedProduct.name_en"/>
-          </div>
-
-          <div class="dialog__item">
             <label>Описание (RU)</label>
             <TextArea v-model="editedProduct.description_ru" autoResize/>
           </div>
@@ -86,12 +104,6 @@
           <div class="dialog__item">
             <label>Описание (KZ)</label>
             <TextArea v-model="editedProduct.description_kz" autoResize/>
-          </div>
-
-
-          <div class="dialog__item">
-            <label>Описание (EN)</label>
-            <TextArea v-model="editedProduct.description_en" autoResize/>
           </div>
 
           <div class="dialog__item">
@@ -300,6 +312,7 @@ export default {
   name: "WarehouseSearchView",
   data() {
     return {
+      // isCollapsed: false,
       activeTab: 0,
       amountChange: 0,
       adjustAmount: 0,
@@ -359,6 +372,11 @@ export default {
     "editedProduct.discount": "updatePriceWithDiscountEditProduct",
   },
   methods: {
+    toggleText(data) {
+      data.isCollapsed = !data.isCollapsed;
+    },
+
+
     async onFileSelect(event, productId) {
       this.loading = true;
       const file = event.files[0];
@@ -475,9 +493,15 @@ export default {
           detail: "Укажите подкатегорию товара для поиска",
         });
       } else {
+        this.products = []
         const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId);
         if (result) {
-          this.products = result.products;
+          this.products = result.products.map(product => {
+            return {
+              ...product,
+              isCollapsed: false
+            }
+          })
         } else {
           this.$toast.add({
             severity: "error",
@@ -620,6 +644,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.product-description {
+  max-width: 400px; /* Пример ограничения ширины, можете менять по вашему усмотрению */
+}
+
+.product-description p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Показываем 3 строки текста */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.product-description p.collapsed {
+  -webkit-line-clamp: unset; /* Если раскрыли, показываем весь текст */
+}
+
+.more {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
 .button-group {
   display: flex;
   flex-direction: column; /* Вертикальное расположение */
