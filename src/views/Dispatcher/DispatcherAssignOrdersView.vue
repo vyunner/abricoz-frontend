@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+
+    <div id="mapContainer" style="width: 1200px; height: 500px; margin: 40px auto;">
+    </div>
+
+
+
     <DataTable class="datatable" :value="orders" tableStyle="min-width: 50rem" showGridlines stripedRows
                responsiveLayout="scroll"
                :paginator="true" :rows="20" :loading="loading">
@@ -65,6 +71,7 @@
 
 <script>
 import dispatcherService from "@/services/dispatcher.service";
+import { load } from '@2gis/mapgl';
 
 export default {
   name: "DispatcherAssignOrdersView",
@@ -84,6 +91,40 @@ export default {
     }
   },
   methods: {
+
+    // async start() {
+    //   const mapglAPI = await load();
+    //
+    //   // container — id of the div element in your html
+    //   const map = new mapglAPI.Map('mapContainer', {
+    //     center: [55.31878, 25.23584],
+    //     zoom: 13,
+    //     key: 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full',
+    //   });
+    //
+    //   const marker = new mapglAPI.Marker(map, {
+    //     coordinates: [55.31878, 25.23584],
+    //   });
+    // },
+
+    initMap() {
+      // Ждём загрузки API и создаём карту
+      // @ts-ignore
+      DG.then(() => {
+        // @ts-ignore
+        const map = DG.map("mapContainer", {
+          center: [50.292452, 57.185681], // Центр карты
+          zoom: 13, // Уровень зума
+        });
+
+        // Добавляем маркер с попапом
+        // @ts-ignore
+        DG.marker([50.299619, 57.183522])
+            .addTo(map)
+            .bindPopup("Вы кликнули по мне!");
+      });
+    },
+
     async getUnassignedOrders() {
       let res = await dispatcherService.getUnassignedOrders();
       if (res) {
@@ -135,6 +176,18 @@ export default {
     }
   },
   async mounted() {
+    const script = document.createElement("script");
+    script.src = "https://maps.api.2gis.ru/2.0/loader.js?pkg=full";
+    script.async = true;
+    script.onload = () => {
+      this.initMap();
+    };
+    script.onerror = () => {
+      console.error("Не удалось загрузить API карт 2ГИС.");
+    };
+    document.body.appendChild(script);
+
+
     await this.getUnassignedOrders();
     this.loading = false;
   }
