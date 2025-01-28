@@ -6,16 +6,37 @@
 
         <div class="card__field" v-if="!showCodeInput">
           <p class="card__text">Номер телефона:</p>
-          <InputText class="card__input" id="input" v-model="user_data.phone" type="text" autofocus/>
+          <InputMask class="card__input" v-model="user_data.phone" @click="moveCursorToLastInput"
+                     mask="+7(999) 999-99-99" placeholder="+7" autofocus/>
+
         </div>
 
         <div class="card__field" v-if="showCodeInput">
           <p class="card__text">Код авторизации:</p>
-          <InputText class="card__input" id="password" v-model="user_data.code" type="password"/>
+          <InputText
+              class="card__input"
+              id="password"
+              v-model="user_data.code"
+              type="password"
+          />
         </div>
 
-        <Button v-if="!showCodeInput" class="card__button" @click="code" type="button" :loading="loading" label="Отправить код"/>
-        <Button v-if="showCodeInput" class="card__button" @click="login" type="button" :loading="loading" label="Войти"/>
+        <Button
+            v-if="!showCodeInput"
+            class="card__button"
+            @click="code"
+            type="button"
+            :loading="loading"
+            label="Отправить код"
+        />
+        <Button
+            v-if="showCodeInput"
+            class="card__button"
+            @click="login"
+            type="button"
+            :loading="loading"
+            label="Войти"
+        />
       </div>
     </div>
     <Toast position="bottom-right" group="br"/>
@@ -32,14 +53,33 @@ export default {
       loading: false,
       showCodeInput: false,
       user_data: {
-        phone: null,
+        phone: '',
         code: null,
       },
     };
   },
   methods: {
+    moveCursorToLastInput(event) {
+      const input = event.target;
+      const value = this.user_data.phone || "";
+
+      if (value) {
+        const digitCount = value.replace(/[^0-9]/g, "").length; // Количество введенных цифр
+        const lastInputIndex = Math.min(2 + digitCount + (digitCount > 3 ? 2 : 0) + (digitCount > 7 ? 1 : 0) + (digitCount > 9 ? 1 : 0), value.length);
+
+        setTimeout(() => {
+          input.setSelectionRange(lastInputIndex, lastInputIndex);
+        }, 0);
+      } else {
+        setTimeout(() => {
+          input.setSelectionRange(3, 3);
+        }, 0);
+      }
+    },
+
     async code() {
       this.loading = true;
+      this.user_data.phone = `+${this.user_data.phone.replace(/\D/g, "")}`
       if (await authService.code(this.user_data)) {
         this.$toast.add({
           severity: 'success',
@@ -63,6 +103,7 @@ export default {
 
     async login() {
       this.loading = true;
+      this.user_data.phone = `+${this.user_data.phone.replace(/\D/g, "")}`
       if (await authService.login(this.user_data)) {
         this.$toast.add({
           severity: 'success',

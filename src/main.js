@@ -19,6 +19,7 @@ import FocusTrap from 'primevue/focustrap';
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
 import InputText from "primevue/inputtext";
+import InputMask from "primevue/inputmask";
 import Checkbox from "primevue/checkbox";
 import Dropdown from "primevue/dropdown";
 import Toast from 'primevue/toast';
@@ -57,6 +58,7 @@ app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
+app.component('InputMask', InputMask)
 app.component('TextArea', TextArea)
 app.component('Checkbox', Checkbox)
 app.component('Dropdown', Dropdown)
