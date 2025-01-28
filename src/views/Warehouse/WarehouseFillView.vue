@@ -23,7 +23,7 @@
         <Column field="id" header="ID" frozen></Column>
         <Column header="Фото" frozen>
           <template #body="{data}">
-            <Image v-if="data.photo_url" :src="'https://api.abricoz.kz' + data.photo_url" width="100" preview/>
+            <Image v-if="data.photo_url" :src="data.photo_url" width="100" preview/>
           </template>
         </Column>
         <Column field="name_ru" header="Название" frozen></Column>
@@ -192,7 +192,7 @@
 
     <Dialog v-model:visible="createProductVisible" modal header="Создать продукт" :style="{ width: '35%' }">
       <div class="dialog">
-        <pre>{{ createProduct }}</pre>
+<!--        <pre>{{ createProduct }}</pre>-->
         <div class="dialog__item">
           <label>Название (RU)</label>
           <InputText v-model="createProduct.name_ru"/>

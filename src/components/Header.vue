@@ -96,6 +96,13 @@ export default {
                 this.menuVisible = false;
               }
             },
+            {
+              label: 'Категории и Подкатегории',
+              command: () => {
+                this.$router.push('/admin/warehouse/categories-subcategories');
+                this.menuVisible = false;
+              }
+            },
           ]
         },
       ];

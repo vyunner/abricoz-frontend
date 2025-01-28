@@ -44,6 +44,11 @@ const routes = [
                     name: 'warehouse/fill',
                     component: () => import('@/views/Warehouse/WarehouseFillView.vue'),
                 },
+                {
+                    path: 'warehouse/categories-subcategories',
+                    name: 'warehouse/categories-subcategories',
+                    component: () => import('@/views/Warehouse/CategoriesSubcategoriesView.vue'),
+                },
             ]
     },
     {
