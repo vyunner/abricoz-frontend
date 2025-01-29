@@ -399,7 +399,7 @@ export default {
             detail: "Не удалось загрузить фото",
           });
         }
-        await this.onSearch();
+        this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
         this.loading = false;
       }
     },
@@ -424,7 +424,7 @@ export default {
           detail: "Продукт успешно обновлен.",
         });
 
-        await this.onSearch();
+        this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
       }
 
       this.amountChange = 0;
@@ -448,7 +448,7 @@ export default {
             detail: "Продукт успешно обновлен.",
           });
 
-          await this.onSearch();
+          this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
         }
       } else {
         this.$toast.add({
@@ -478,7 +478,7 @@ export default {
           detail: "Продукт успешно обновлен.",
         });
 
-        await this.onSearch();
+        this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
       }
 
       this.editWarehouseVisible = false;
@@ -496,7 +496,7 @@ export default {
         this.products = []
         const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId);
         if (result) {
-          this.products = result.products.map(product => {
+          this.products = result.data.map(product => {
             return {
               ...product,
               isCollapsed: false
@@ -552,7 +552,7 @@ export default {
           detail: "Продукт успешно обновлен",
         });
         this.editProductVisible = false;
-        await this.onSearch();
+        this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
       } else {
         this.$toast.add({
           severity: "error",

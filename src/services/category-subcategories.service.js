@@ -34,6 +34,15 @@ const warehouseService = {
             return [];
         }
     },
+    async createCategory(SubCategoryData) {
+        try {
+            const {status, data} = await httpClient.post(`/category/store`, SubCategoryData);
+            return status === 200;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    },
     async createSubCategory(SubCategoryData) {
         try {
             const {status, data} = await httpClient.post(`/sub-category/store`, SubCategoryData);

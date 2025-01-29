@@ -23,9 +23,6 @@ export default {
     }
   },
   methods: {
-
-
-
     add(){
       this.categoryDialog.visible = !this.categoryDialog.visible
     },
@@ -39,11 +36,62 @@ export default {
       this.loading = false
     },
 
+    onDesktopFileSelect(event){
+      this.categoryDialog.data.desktop_image = event.files[0]
+    },
+
+    onMobileFileSelect(event){
+      this.categoryDialog.data.mobile_image = event.files[0]
+    },
+
+    editPhoto(){
+
+      const formData = new FormData();
+      formData.append('photo', this.categoryDialog.data.desktop_image)
+      const formData1 = new FormData();
+      formData1.append('photo', this.categoryDialog.data.desktop_image)
+    },
+
+    async saveCreate(){
+      if (this.categoryDialog.data.id){
+
+      } else {
+        let form = {
+          name_ru: this.categoryDialog.data.name_ru,
+          name_kz: this.categoryDialog.data.name_kz,
+        }
+
+        const res = await categorySubcategoriesService.createCategory(form)
+        if (res) {
+          this.tableData = await categorySubcategoriesService.getCategory();
+          this.$toast.add({
+            severity: "success",
+            summary: "Успешно!",
+            detail: "Категория создана",
+          });
+        } else {
+          this.$toast.add({
+            severity: "error",
+            summary: "Ошибка",
+            detail: "Ошибка при создании категории",
+          });
+        }
+
+      }
+    },
+
 
 
 
   },
   computed: {
+
+    isFormValid() {
+      return (
+          this.categoryDialog.data.name_ru &&
+          this.categoryDialog.data.name_kz
+      );
+    },
 
   },
   async mounted() {
@@ -109,99 +157,31 @@ export default {
         <pre>{{ categoryDialog }}</pre>
         <div class="dialog__item">
           <label>Название (RU)</label>
-          <InputText v-model="categoryDialog.name_ru"/>
+          <InputText v-model="categoryDialog.data.name_ru"/>
         </div>
 
         <div class="dialog__item">
           <label>Название (KZ)</label>
-          <InputText v-model="categoryDialog.name_kz"/>
+          <InputText v-model="categoryDialog.data.name_kz"/>
         </div>
 
         <div class="dialog__item">
-          <label>Название (EN)</label>
-          <InputText v-model="categoryDialog.name_en"/>
+          <label>Фото {{activeTab === 0? '(для сайта)' : ''}}</label>
+          <FileUpload mode="basic" name="photo" accept="image/*"
+                      :maxFileSize="1000000" @select="onDesktopFileSelect($event)" chooseLabel="Фото"/>
+
         </div>
 
-        <div class="dialog__item">
-          <label>Описание (RU)</label>
-          <TextArea v-model="categoryDialog.description_ru" autoResize/>
+        <div v-if="activeTab === 0" class="dialog__item">
+          <label>Фото (для приложения)</label>
+          <FileUpload mode="basic" name="photo" accept="image/*"
+                      :maxFileSize="1000000" @select="onMobileFileSelect($event)" chooseLabel="Фото"/>
         </div>
 
-        <div class="dialog__item">
-          <label>Описание (KZ)</label>
-          <TextArea v-model="categoryDialog.description_kz" autoResize/>
-        </div>
-
-
-        <div class="dialog__item">
-          <label>Описание (EN)</label>
-          <TextArea v-model="categoryDialog.description_en" autoResize/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Полка</label>
-          <InputText v-model="categoryDialog.where"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Производитель</label>
-          <InputText v-model="categoryDialog.manufacturer"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Вес</label>
-          <InputText v-model="categoryDialog.weight"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Количество</label>
-          <InputNumber v-model="categoryDialog.amount"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Калории</label>
-          <InputNumber v-model="categoryDialog.calories" :maxFractionDigits="1"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Белки</label>
-          <InputNumber v-model="categoryDialog.proteins" :maxFractionDigits="1"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Жиры</label>
-          <InputNumber v-model="categoryDialog.fats" :maxFractionDigits="1"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Углеводы</label>
-          <InputNumber v-model="categoryDialog.carbohydrates" :maxFractionDigits="1"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Цена</label>
-          <InputNumber v-model="categoryDialog.price"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Скидка</label>
-          <InputNumber v-model="categoryDialog.discount"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Цена со скидкой</label>
-          <InputNumber disabled v-model="categoryDialog.price_with_discount"/>
-        </div>
-
-        <div class="dialog__item">
-          <label>Активен?</label>
-          <ToggleButton v-model="categoryDialog.is_active" onLabel="Да" offLabel="Нет"/>
-        </div>
-
-        <div class="dialog__item">
-          <label for="subcategory">Подкатегория</label>
+        <div v-if="activeTab === 1" class="dialog__item">
+          <label for="subcategory">Категория</label>
           <Dropdown
-              v-model="categoryDialog.subcategory_id"
+              v-model="categoryDialog.data.category_id"
               :options="subcategories"
               optionLabel="name_ru"
               optionValue="id"
@@ -209,10 +189,13 @@ export default {
           />
         </div>
 
-        <Button label="Создать" :disabled="!isFormValid || loading" @click="onCreate" :style="{margin: '10px 0 0 0'}"
+        <Button label="Создать" :disabled="!isFormValid || loading" @click="saveCreate" :style="{margin: '10px 0 0 0'}"
                 :loading="loading"/>
       </div>
     </Dialog>
+
+    <Toast position="bottom-right" group="br"/>
+
 
 
   </div>

@@ -16,7 +16,8 @@ const warehouseService = {
     },
     async searchBySubCategory(subcategory_id) {
         try {
-            const {status, data} = await httpClient.get(`/product/index?subcategory_id[]=${subcategory_id}`,);
+            const {status, data} = await httpClient.get(`/warehouse/get-products?subcategory_id[]=${subcategory_id}`,);
+            // const {status, data} = await httpClient.get(`/product/index?subcategory_id[]=${subcategory_id}`,);
             if (status === 200) {
                 return data.data;
             }
