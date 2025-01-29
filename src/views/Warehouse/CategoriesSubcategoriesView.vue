@@ -40,9 +40,13 @@ export default {
     async tabChange() {
       this.loading = true
       this.tableData = []
-      this.activeTab === 1?
-          this.tableData = await categorySubcategoriesService.getSubCategory()
-          : this.tableData = await categorySubcategoriesService.getCategory()
+      if (this.activeTab === 0){
+        const categories = await categorySubcategoriesService.getCategory();
+        this.tableData = categories;
+        this.categoryOptions = categories;
+      } else {
+        this.tableData = await categorySubcategoriesService.getSubCategory()
+      }
       this.loading = false
     },
 
@@ -58,12 +62,12 @@ export default {
       }
     },
 
-    editPhoto(){
-      const formData = new FormData();
-      formData.append('photo', this.categoryDialog.data.desktop_image)
-      const formData1 = new FormData();
-      formData1.append('photo', this.categoryDialog.data.desktop_image)
-    },
+    // editPhoto(){
+    //   const formData = new FormData();
+    //   formData.append('photo', this.categoryDialog.data.desktop_image)
+    //   const formData1 = new FormData();
+    //   formData1.append('photo', this.categoryDialog.data.desktop_image)
+    // },
 
     async saveCreate(){
       this.loading = true
@@ -92,9 +96,13 @@ export default {
 
         this.categoryDialog.visible = !this.categoryDialog.visible
         if (res) {
-          this.tableData = this.activeTab === 1?
-              this.tableData = await categorySubcategoriesService.getSubCategory()
-              : this.tableData = await categorySubcategoriesService.getCategory()
+          if (this.activeTab === 0){
+            const categories = await categorySubcategoriesService.getCategory();
+            this.tableData = categories;
+            this.categoryOptions = categories;
+          } else {
+            this.tableData = await categorySubcategoriesService.getSubCategory()
+          }
           this.$toast.add({
             severity: "success",
             summary: "Успешно!",
@@ -126,9 +134,13 @@ export default {
             : res = await categorySubcategoriesService.createCategory(form)
         this.categoryDialog.visible = !this.categoryDialog.visible
         if (res) {
-          this.tableData = this.activeTab === 1?
-              this.tableData = await categorySubcategoriesService.getSubCategory()
-              : this.tableData = await categorySubcategoriesService.getCategory()
+          if (this.activeTab === 0){
+            const categories = await categorySubcategoriesService.getCategory();
+            this.tableData = categories;
+            this.categoryOptions = categories;
+          } else {
+            this.tableData = await categorySubcategoriesService.getSubCategory()
+          }
           this.$toast.add({
             severity: "success",
             summary: "Успешно!",
@@ -155,9 +167,13 @@ export default {
       this.activeTab === 1? res = await categorySubcategoriesService.deleteSubCategory(id)
           : res = await categorySubcategoriesService.deleteCategory(id)
       if (res) {
-        this.tableData = this.activeTab === 1?
-            this.tableData = await categorySubcategoriesService.getSubCategory()
-            : this.tableData = await categorySubcategoriesService.getCategory()
+        if (this.activeTab === 0){
+          const categories = await categorySubcategoriesService.getCategory();
+          this.tableData = categories;
+          this.categoryOptions = categories;
+        } else {
+          this.tableData = await categorySubcategoriesService.getSubCategory()
+        }
         this.$toast.add({
           severity: "success",
           summary: "Успешно!",
