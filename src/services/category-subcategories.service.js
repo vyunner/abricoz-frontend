@@ -52,10 +52,30 @@ const warehouseService = {
             return false;
         }
     },
+    async updateCategory(categoryData) {
+        try {
+            const {status, data} = await httpClient.post(`/category/update/${categoryData.get("id")}`, categoryData);
+            return status === 200;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    },
     async updateSubCategory(SubCategoryData) {
         try {
             const {status, data} = await httpClient.post(`/sub-category/update/${id}`, SubCategoryData);
             return status === 200;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    },
+    async deleteCategory(id) {
+        try {
+            const {status} = await httpClient.delete(`/category/delete/${id}`);
+            if (status === 200) {
+                return true;
+            }
         } catch (e) {
             console.error(e);
             return false;

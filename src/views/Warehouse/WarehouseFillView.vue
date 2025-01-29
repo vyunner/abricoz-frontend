@@ -122,6 +122,11 @@
           </div>
 
           <div class="dialog__item">
+            <label>Количество</label>
+            <InputNumber v-model="editedProduct.amount"/>
+          </div>
+
+          <div class="dialog__item">
             <label>Калории</label>
             <InputNumber v-model="editedProduct.calories" :maxFractionDigits="1"/>
           </div>
@@ -156,7 +161,7 @@
             <InputNumber disabled v-model="editedProduct.price_with_discount"/>
           </div>
 
-          <div class="dialog__item">
+          <div v-if="editedProduct.amount > 0" class="dialog__item">
             <label>Активен?</label>
             <ToggleButton v-model="editedProduct.is_active" onLabel="Да" offLabel="Нет" true-value="1" false-value="0"/>
           </div>
@@ -279,7 +284,7 @@
           <InputNumber disabled v-model="createProduct.price_with_discount"/>
         </div>
 
-        <div class="dialog__item">
+        <div v-if="createProduct.amount > 0" class="dialog__item">
           <label>Активен?</label>
           <ToggleButton v-model="createProduct.is_active" onLabel="Да" offLabel="Нет"/>
         </div>
@@ -391,12 +396,14 @@ export default {
             severity: "success",
             summary: "Успешно",
             detail: "Фото было успешно загружено",
+            life: 3000
           });
         } else {
           this.$toast.add({
             severity: "error",
             summary: "Что то пошло не так",
             detail: "Не удалось загрузить фото",
+            life: 3000
           });
         }
         this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
@@ -422,6 +429,7 @@ export default {
           severity: "success",
           summary: "Успех",
           detail: "Продукт успешно обновлен.",
+          life: 3000
         });
 
         this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
@@ -446,6 +454,7 @@ export default {
             severity: "success",
             summary: "Успех",
             detail: "Продукт успешно обновлен.",
+            life: 3000
           });
 
           this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
@@ -455,6 +464,7 @@ export default {
           severity: "error",
           summary: "Ошибка",
           detail: "Остаток на складе будет меньше нуля.",
+          life: 3000
         });
       }
 
@@ -476,6 +486,7 @@ export default {
           severity: "success",
           summary: "Успех",
           detail: "Продукт успешно обновлен.",
+          life: 3000
         });
 
         this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
@@ -491,6 +502,7 @@ export default {
           severity: "warn",
           summary: "Предупреждение",
           detail: "Укажите подкатегорию товара для поиска",
+          life: 3000
         });
       } else {
         this.products = []
@@ -507,6 +519,7 @@ export default {
             severity: "error",
             summary: "Ошибка",
             detail: "Ошибка при поиске товаров",
+            life: 3000
           });
         }
       }
@@ -519,6 +532,7 @@ export default {
           severity: "warn",
           summary: "Предупреждение",
           detail: "Введите название товара для поиска",
+          life: 3000
         });
       } else {
         const result = await warehouseService.search(this.searchTerm);
@@ -529,6 +543,7 @@ export default {
             severity: "error",
             summary: "Ошибка",
             detail: "Ошибка при поиске товаров",
+            life: 3000
           });
         }
       }
@@ -541,15 +556,36 @@ export default {
     },
     async onSave() {
       this.loading = true;
+      let form = {
+        subcategory_id: this.editedProduct.subcategory_id,
+        manufacturer: this.editedProduct.manufacturer,
+        where: this.editedProduct.where,
+        name_ru: this.editedProduct.name_ru,
+        name_kz: this.editedProduct.name_kz,
+        description_ru: this.editedProduct.description_ru,
+        description_kz: this.editedProduct.description_kz,
+        weight: this.editedProduct.weight,
+        calories: this.editedProduct.calories,
+        proteins: this.editedProduct.proteins,
+        fats: this.editedProduct.fats,
+        carbohydrates: this.editedProduct.carbohydrates,
+        price: this.editedProduct.price,
+        discount: this.editedProduct.discount,
+        price_with_discount: this.editedProduct.price_with_discount,
+        total_sales: this.editedProduct.total_sales,
+        amount: this.editedProduct.amount,
+        is_active: this.editedProduct.amount <= 0? false : this.editedProduct.is_active
+      }
       const result = await warehouseService.updateProduct(
           this.editedProduct.id,
-          this.editedProduct
+          form
       );
       if (result) {
         this.$toast.add({
           severity: "success",
           summary: "Успех",
           detail: "Продукт успешно обновлен",
+          life: 3000
         });
         this.editProductVisible = false;
         this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
@@ -558,6 +594,7 @@ export default {
           severity: "error",
           summary: "Ошибка",
           detail: "Ошибка при обновлении продукта",
+          life: 3000
         });
       }
       this.loading = false;
@@ -575,12 +612,14 @@ export default {
             severity: "success",
             summary: "Удалено",
             detail: `Продукт ID: ${id} успешно удален`,
+            life: 3000
           });
         } else {
           this.$toast.add({
             severity: "error",
             summary: "Ошибка",
             detail: "Ошибка при удалении продукта",
+            life: 3000
           });
         }
       }
