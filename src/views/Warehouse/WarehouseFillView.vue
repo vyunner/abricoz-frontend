@@ -16,7 +16,8 @@
         <Button label="Поиск" icon="pi pi-search" @click="onSearchBySubCategory" :loading="loading"/>
       </div>
 
-      <DataTable v-if="products.length" :value="products" class="dataTable" tableStyle="min-width: 50rem" showGridlines
+
+      <DataTable v-if="activeTab === 0? products?.length : products.data?.length" :value="activeTab === 0? products : products.data" :totalRecords="totalRecords" class="dataTable" tableStyle="min-width: 50rem" showGridlines
                  stripedRows scrollable responsiveLayout="scroll" :loading="loading">
 
         <!-- Отображение полей продукта -->
@@ -82,6 +83,11 @@
           </template>
         </Column>
       </DataTable>
+
+
+      <Paginator v-if="products.data?.length" v-model:first="first" :rows="products.per_page" :totalRecords="products.total"
+                 @page="paginateHandler" />
+
 
       <!-- Диалоговое окно для редактирования продукта -->
       <Dialog v-model:visible="editProductVisible" modal header="Изменить продукт" :style="{ width: '35%' }">
@@ -318,6 +324,12 @@ export default {
   data() {
     return {
       // isCollapsed: false,
+      first: 0,
+
+      rows: 10, // Количество записей на странице
+      totalRecords: 0, // Общее количество записей
+      currentPage: 1, // Текущая страница
+
       activeTab: 0,
       amountChange: 0,
       adjustAmount: 0,
@@ -332,6 +344,7 @@ export default {
       editProductVisible: false,
       editWarehouseVisible: false,
       createProductVisible: false,
+      page: 0,
       subcategories: [],
       brandSuggestions: [],
       countrySuggestions: [],
@@ -379,6 +392,11 @@ export default {
   methods: {
     toggleText(data) {
       data.isCollapsed = !data.isCollapsed;
+    },
+
+    async paginateHandler(e) {
+      this.page = e.page + 1
+      await this.onSearchBySubCategory()
     },
 
 
@@ -506,9 +524,10 @@ export default {
         });
       } else {
         this.products = []
-        const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId);
+        const result = await warehouseService.searchBySubCategory(this.searchSubCategoryId, this.page);
         if (result) {
-          this.products = result.data.map(product => {
+          this.products = result.data
+          this.products.data = result.data.data.map(product => {
             return {
               ...product,
               isCollapsed: false
@@ -676,7 +695,10 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    this.subcategories = await warehouseService.getSubcategories();
+    const subcategoriesData = await warehouseService.getSubcategories();
+    this.subcategories = subcategoriesData.data
+    this.totalRecords = subcategoriesData.total; // Установка общего количества записей
+    this.currentPage = subcategoriesData.current_page; // Установка текущей страницы
     this.loading = false;
   },
 };

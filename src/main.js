@@ -27,6 +27,7 @@ import ToastService from "primevue/toastservice";
 import PanelMenu from "primevue/panelmenu";
 import Dialog from 'primevue/dialog';
 import Image from 'primevue/image';
+import Paginator from 'primevue/paginator';
 import AutoComplete from 'primevue/autocomplete';
 import InputNumber from 'primevue/inputnumber';
 import ToggleButton from 'primevue/togglebutton';
@@ -52,6 +53,7 @@ app.directive('focustrap', FocusTrap);
 app.component('Button', Button)
 app.component('Menu', Menu)
 app.component('TabMenu', TabMenu)
+app.component('Paginator', Paginator)
 app.component('Menubar', Menubar)
 app.component('Sidebar', Sidebar)
 app.component('IconField', IconField)

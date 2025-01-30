@@ -14,12 +14,12 @@ const warehouseService = {
             return false;
         }
     },
-    async searchBySubCategory(subcategory_id) {
+    async searchBySubCategory(subcategory_id, page) {
         try {
-            const {status, data} = await httpClient.get(`/warehouse/get-products?subcategory_id[]=${subcategory_id}`,);
+            const {status, data} = await httpClient.get(`/warehouse/get-products?subcategory_id[]=${subcategory_id}&page=${page}`,);
             // const {status, data} = await httpClient.get(`/product/index?subcategory_id[]=${subcategory_id}`,);
             if (status === 200) {
-                return data.data;
+                return data;
             }
         } catch (e) {
             console.error(e);
@@ -30,7 +30,7 @@ const warehouseService = {
         try {
             const {status, data} = await httpClient.get(`/warehouse/get-subcategories`);
             if (status === 200) {
-                return data.data;
+                return data;
             }
         } catch (e) {
             console.error(e);
