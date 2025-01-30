@@ -12,10 +12,9 @@
 
       <div v-if="activeTab === 1" class="input-group">
         <Dropdown class="input-group__dropdown" v-model="searchSubCategoryId" optionLabel="name_ru" optionValue="id" :options="subcategories"
-            placeholder="Укажите подкатегорию"  @keyup.enter="onSearchBySubCategory"/>
+            placeholder="Укажите подкатегорию"  @keyup.enter="onSearchBySubCategory" @change="changeFilter = true"/>
         <Button label="Поиск" icon="pi pi-search" @click="onSearchBySubCategory" :loading="loading"/>
       </div>
-
 
       <DataTable v-if="activeTab === 0? products?.length : products.data?.length" :value="activeTab === 0? products : products.data" :totalRecords="totalRecords" class="dataTable" tableStyle="min-width: 50rem" showGridlines
                  stripedRows scrollable responsiveLayout="scroll" :loading="loading">
@@ -325,6 +324,7 @@ export default {
     return {
       // isCollapsed: false,
       first: 0,
+      changeFilter: false,
 
       rows: 10, // Количество записей на странице
       totalRecords: 0, // Общее количество записей
@@ -393,6 +393,7 @@ export default {
     toggleText(data) {
       data.isCollapsed = !data.isCollapsed;
     },
+
 
     async paginateHandler(e) {
       this.page = e.page + 1
@@ -514,6 +515,11 @@ export default {
       this.loading = false;
     },
     async onSearchBySubCategory() {
+      if (this.changeFilter) {
+        this.page = 0
+        this.first = 0
+      }
+      this.changeFilter = false
       this.loading = true;
       if (!this.searchSubCategoryId) {
         this.$toast.add({
