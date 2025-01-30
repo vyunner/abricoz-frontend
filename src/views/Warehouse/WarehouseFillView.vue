@@ -21,13 +21,13 @@
                  stripedRows scrollable responsiveLayout="scroll" :loading="loading">
 
         <!-- Отображение полей продукта -->
-        <Column field="id" header="ID" frozen></Column>
-        <Column header="Фото" frozen>
+        <Column field="id" header="ID"></Column>
+        <Column header="Фото">
           <template #body="{data}">
             <Image v-if="data.photo_url" :src="data.photo_url" width="100" preview/>
           </template>
         </Column>
-        <Column field="name_ru" header="Название" frozen></Column>
+        <Column field="name_ru" header="Название"></Column>
         <Column v-if="activeTab === 1" header="Описание">
           <template #body="{data}">
             <div class="product-description" @click="toggleText(data)">
