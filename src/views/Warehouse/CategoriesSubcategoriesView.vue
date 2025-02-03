@@ -10,10 +10,6 @@ export default {
       preloaderLoading: true,
       loading: false,
       buttonLoading: false,
-      photoChange: {
-        firstPhoto: false,
-        secondPhoto: false,
-      },
       tableLoading: false,
       categoryOptions: [],
       tableData: [],
@@ -50,24 +46,11 @@ export default {
       this.loading = false
     },
 
-    onFileSelect(event, data){
-      if (data === 1){
-        this.photoChange.firstPhoto = true
+    onFileSelect(event){
         this.activeTab === 1?
             this.categoryDialog.data.image = event.files[0]
-            : this.categoryDialog.data.desktop_image = event.files[0]
-      } else {
-        this.photoChange.secondPhoto = true
-        this.categoryDialog.data.mobile_image = event.files[0]
-      }
+            : this.categoryDialog.data.mobile_image = event.files[0]
     },
-
-    // editPhoto(){
-    //   const formData = new FormData();
-    //   formData.append('photo', this.categoryDialog.data.desktop_image)
-    //   const formData1 = new FormData();
-    //   formData1.append('photo', this.categoryDialog.data.desktop_image)
-    // },
 
     async saveCreate(){
       this.loading = true
@@ -77,18 +60,10 @@ export default {
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
         if (this.activeTab === 1){
-          if (this.photoChange.firstPhoto) {
-            form.append('image', this.categoryDialog.data.image)
-            form.append('category_id', this.categoryDialog.data.category_id)
-          }
+          form.append('image', this.categoryDialog.data.image)
+          form.append('category_id', this.categoryDialog.data.category_id)
         } else {
-          if (this.photoChange.firstPhoto){
-            form.append('desktop_image', this.categoryDialog.data.desktop_image)
-          }
-
-          if (this.photoChange.secondPhoto){
-            form.append('mobile_image', this.categoryDialog.data.mobile_image)
-          }
+          form.append('mobile_image', this.categoryDialog.data.mobile_image)
         }
         let res
         this.activeTab === 1? res = await categorySubcategoriesService.updateSubCategory(form)
@@ -125,7 +100,6 @@ export default {
           form.append('image', this.categoryDialog.data.image)
           form.append('category_id', this.categoryDialog.data.category_id)
         } else {
-          form.append('desktop_image', this.categoryDialog.data.desktop_image)
           form.append('mobile_image', this.categoryDialog.data.mobile_image)
         }
 
@@ -157,8 +131,6 @@ export default {
         }
 
       }
-      this.photoChange.firstPhoto = false
-      this.photoChange.secondPhoto = false
       this.loading = false
     },
 
@@ -233,17 +205,9 @@ export default {
 
           <!-- Отображение полей продукта -->
           <Column field="id" header="ID"></Column>
-          <Column :header="activeTab === 1? 'Фото' : 'Фото на сайте'">
+          <Column header="Фото">
             <template #body="{data}">
-<!--              <Image v-if="data.image_url && activeTab === 1" :src="'https://api.abricoz.kz' + data.image_url" width="100" preview/>-->
-<!--              <Image v-if="data.desktop_image_url && activeTab === 0" :src="'https://api.abricoz.kz' + data.desktop_image_url" width="100" preview/>-->
               <Image v-if="data.image_url && activeTab === 1" :src="data.image_url" width="100" preview/>
-              <Image v-if="data.desktop_image_url && activeTab === 0" :src="data.desktop_image_url" width="100" preview/>
-            </template>
-          </Column>
-          <Column v-if="activeTab === 0" header="Фото в приложении">
-            <template #body="{data}">
-<!--              <Image v-if="data.mobile_image_url && activeTab === 0" :src="'https://api.abricoz.kz' + data.mobile_image_url" width="100" preview/>-->
               <Image v-if="data.mobile_image_url && activeTab === 0" :src="data.mobile_image_url" width="100" preview/>
             </template>
           </Column>
@@ -283,17 +247,10 @@ export default {
         </div>
 
         <div class="dialog__item">
-          <label>Фото {{activeTab !== 1? '(на сайте)' : ''}}</label>
+          <label>Фото</label>
           <FileUpload mode="basic" name="photo" accept="image/*"
                       :maxFileSize="1000000"
-                      @select="onFileSelect($event, 1)" chooseLabel="Фото"/>
-        </div>
-
-        <div v-if="activeTab !== 1" class="dialog__item">
-          <label>Фото (на моб. приложение)</label>
-          <FileUpload mode="basic" name="photo" accept="image/*"
-                      :maxFileSize="1000000"
-                      @select="onFileSelect($event, 2)" chooseLabel="Фото"/>
+                      @select="onFileSelect($event)" chooseLabel="Фото"/>
         </div>
 
         <div v-if="activeTab === 1" class="dialog__item">
