@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <InputText placeholder="Номер телефона..." v-model="phone"></InputText>
+    <InputMask class="card__input" v-model="phone" @click="moveCursorToLastInput"
+               @keydown.enter="getUser" mask="+7(999) 999-99-99" placeholder="Номер телефона..."/>
     <Button label="Найти" @click="getUser" :loading="loading"></Button>
     <div class="panel" v-if="user">
       <div class="panel__user">
@@ -35,8 +36,26 @@ export default {
     };
   },
   methods: {
+    moveCursorToLastInput(event) {
+      const input = event.target;
+      const value = this.phone || "";
+
+      if (value) {
+        const digitCount = value.replace(/[^0-9]/g, "").length; // Количество введенных цифр
+        const lastInputIndex = Math.min(2 + digitCount + (digitCount > 3 ? 2 : 0) + (digitCount > 7 ? 1 : 0) + (digitCount > 9 ? 1 : 0), value.length);
+
+        setTimeout(() => {
+          input.setSelectionRange(lastInputIndex, lastInputIndex);
+        }, 0);
+      } else {
+        setTimeout(() => {
+          input.setSelectionRange(3, 3);
+        }, 0);
+      }
+    },
     async getUser() {
       this.loading = true;
+      this.phone = `+${this.phone.replace(/\D/g, "")}`
       let res = await userService.getUser(this.phone);
       if (res) {
         this.user = res;

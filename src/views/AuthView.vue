@@ -7,7 +7,7 @@
         <div class="card__field" v-if="!showCodeInput">
           <p class="card__text">Номер телефона:</p>
           <InputMask class="card__input" v-model="user_data.phone" @click="moveCursorToLastInput"
-                     mask="+7(999) 999-99-99" placeholder="+7" autofocus/>
+                     @keydown.enter="code" mask="+7(999) 999-99-99" placeholder="+7" autofocus/>
 
         </div>
 
@@ -18,6 +18,7 @@
               id="password"
               v-model="user_data.code"
               type="password"
+              @keyup.enter="login"
           />
         </div>
 
