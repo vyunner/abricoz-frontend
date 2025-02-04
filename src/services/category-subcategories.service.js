@@ -63,7 +63,7 @@ const warehouseService = {
     },
     async updateSubCategory(SubCategoryData) {
         try {
-            const {status, data} = await httpClient.post(`/sub-category/update/${id}`, SubCategoryData);
+            const {status, data} = await httpClient.post(`/sub-category/update/${SubCategoryData.get("id")}`, SubCategoryData);
             return status === 200;
         } catch (e) {
             console.error(e);
