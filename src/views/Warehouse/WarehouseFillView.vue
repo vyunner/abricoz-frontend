@@ -214,11 +214,6 @@
         </div>
 
         <div class="dialog__item">
-          <label>Название (EN)</label>
-          <InputText v-model="createProduct.name_en"/>
-        </div>
-
-        <div class="dialog__item">
           <label>Описание (RU)</label>
           <TextArea v-model="createProduct.description_ru" autoResize/>
         </div>
@@ -228,11 +223,6 @@
           <TextArea v-model="createProduct.description_kz" autoResize/>
         </div>
 
-
-        <div class="dialog__item">
-          <label>Описание (EN)</label>
-          <TextArea v-model="createProduct.description_en" autoResize/>
-        </div>
 
         <div class="dialog__item">
           <label>Полка</label>
@@ -632,7 +622,7 @@ export default {
       if (confirmed) {
         const success = await warehouseService.deleteProduct(id);
         if (success) {
-          await this.onSearch();
+          this.activeTab === 0? await this.onSearch() : await this.onSearchBySubCategory();
           this.$toast.add({
             severity: "success",
             summary: "Удалено",
@@ -679,6 +669,17 @@ export default {
     // Метод для создания нового продукта
     async onCreate() {
       this.loading = true;
+      if (
+          this.createProduct.calories === 0 &&
+          this.createProduct.proteins === 0 &&
+          this.createProduct.fats === 0 &&
+          this.createProduct.carbohydrates === 0
+      ) {
+        this.createProduct.calories = null;
+        this.createProduct.proteins = null;
+        this.createProduct.fats = null;
+        this.createProduct.carbohydrates = null;
+      }
 
       // Отправляем данные на сервер
       const result = await warehouseService.createProduct(this.createProduct);
