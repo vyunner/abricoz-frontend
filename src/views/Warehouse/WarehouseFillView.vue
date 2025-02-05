@@ -354,10 +354,8 @@ export default {
       return (
           this.createProduct.name_ru &&
           this.createProduct.name_kz &&
-          this.createProduct.name_en &&
           this.createProduct.description_ru &&
           this.createProduct.description_kz &&
-          this.createProduct.description_en &&
           this.createProduct.where &&
           this.createProduct.manufacturer &&
           this.createProduct.weight &&
