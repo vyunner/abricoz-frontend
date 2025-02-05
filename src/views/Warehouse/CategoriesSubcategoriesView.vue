@@ -59,11 +59,15 @@ export default {
         form.append('id', this.categoryDialog.data.id)
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
-        if (this.activeTab === 1){
-          form.append('image', this.categoryDialog.data.image? this.categoryDialog.data.image : null)
-          form.append('category_id', this.categoryDialog.data.category_id)
+        if (this.activeTab === 1) {
+          if (this.categoryDialog.data.image !== null) {
+            form.append('image', this.categoryDialog.data.image);
+          }
+          form.append('category_id', this.categoryDialog.data.category_id);
         } else {
-          form.append('mobile_image', this.categoryDialog.data.mobile_image? this.categoryDialog.data.mobile_image : null)
+          if (this.categoryDialog.data.mobile_image !== null) {
+            form.append('mobile_image', this.categoryDialog.data.mobile_image);
+          }
         }
         let res
         this.activeTab === 1? res = await categorySubcategoriesService.updateSubCategory(form)
@@ -96,11 +100,15 @@ export default {
         let form = new FormData
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
-        if (this.activeTab === 1){
-          form.append('image', this.categoryDialog.data.image? this.categoryDialog.data.image : null)
-          form.append('category_id', this.categoryDialog.data.category_id)
+        if (this.activeTab === 1) {
+          if (this.categoryDialog.data.image !== null) {
+            form.append('image', this.categoryDialog.data.image);
+          }
+          form.append('category_id', this.categoryDialog.data.category_id);
         } else {
-          form.append('mobile_image', this.categoryDialog.data.mobile_image? this.categoryDialog.data.mobile_image : null)
+          if (this.categoryDialog.data.mobile_image !== null) {
+            form.append('mobile_image', this.categoryDialog.data.mobile_image);
+          }
         }
 
         let res
