@@ -60,12 +60,12 @@ export default {
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
         if (this.activeTab === 1) {
-          if (this.categoryDialog.data.image !== null) {
+          if (this.categoryDialog.data.image) {
             form.append('image', this.categoryDialog.data.image);
           }
           form.append('category_id', this.categoryDialog.data.category_id);
         } else {
-          if (this.categoryDialog.data.mobile_image !== null) {
+          if (this.categoryDialog.data.mobile_image) {
             form.append('mobile_image', this.categoryDialog.data.mobile_image);
           }
         }
