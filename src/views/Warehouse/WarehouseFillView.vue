@@ -592,17 +592,22 @@ export default {
         is_active: this.editedProduct.amount <= 0? false : this.editedProduct.is_active
       }
 
-      if (
-          form.calories === 0 &&
-          form.proteins === 0 &&
-          form.fats === 0 &&
-          form.carbohydrates === 0
-      ) {
+      if (form.calories === 0) {
         form.calories = null;
+      }
+
+      if (form.proteins === 0) {
         form.proteins = null;
+      }
+
+      if (form.fats === 0) {
         form.fats = null;
+      }
+
+      if (form.carbohydrates === 0) {
         form.carbohydrates = null;
       }
+
       const result = await warehouseService.updateProduct(
           this.editedProduct.id,
           form
