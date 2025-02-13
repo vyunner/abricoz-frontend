@@ -2,7 +2,6 @@ import {createRouter, createWebHistory} from 'vue-router'
 import AdminView from "@/views/AdminView.vue";
 
 const routes = [
-
     {
         path: '/',
         name: 'home',
@@ -12,6 +11,16 @@ const routes = [
         path: '/preloader',
         name: 'preloader',
         component: () => import('@/components/common/HomePagePreloader.vue'),
+    },
+    {
+        path: '/payment',
+        name: 'payment',
+        component: () => import('@/views/PaymentPage.vue'),
+    },
+    {
+        path: '/payment-test',
+        name: 'payment',
+        component: () => import('@/views/PaymentTestPage.vue'),
     },
     {
         path: '/admin',
