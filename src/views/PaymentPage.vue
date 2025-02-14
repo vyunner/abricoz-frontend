@@ -1,5 +1,6 @@
 <template>
-<h3>Подождите...</h3>
+  <h3 v-if="error">Что-то пошло не так</h3>
+  <h3 v-else>Подождите...</h3>
 </template>
 
 <script>
@@ -7,7 +8,9 @@ import epayService from "@/services/epay.service";
 
 export default {
   data() {
-    return {};
+    return {
+      error: false,
+    };
   },
   methods: {
     async loadPaymentScript() {
@@ -15,23 +18,25 @@ export default {
         const script = document.createElement("script");
         script.src = "https://epay.homebank.kz/payform/payment-api.js";
         script.async = true;
-        script.onload = () => {
-          resolve();
-        };
+        script.onload = () => resolve();
         script.onerror = reject;
-
         document.body.appendChild(script);
       });
     },
     async redirectPaymentPage() {
       try {
         let user_id = this.$route.query.user_id;
+        if (!user_id) {
+          this.error = true;
+          return;
+        }
+
         let data = await epayService.getSaveCardToken(user_id);
         const [lat, lon] = data.ip_info.loc.split(",");
 
         if (window.halyk) {
           var createPaymentObject = function (auth, invoiceId, amount) {
-            var paymentObject = {
+            return {
               invoiceId: data.invoice_id,
               backLink: "https://abricoz.kz/payment",
               failureBackLink: "https://abricoz.kz/payment",
@@ -51,22 +56,27 @@ export default {
               ipDistrict: data.ip_info.city,
               ipLatitude: lat,
               ipLongitude: lon,
+              auth: auth,
             };
-            paymentObject.auth = auth;
-            return paymentObject;
           };
 
           window.halyk.cardverification(createPaymentObject(data.token, data.invoice_id, 0));
         } else {
           console.error("Ошибка: halyk не определён");
+          this.error = true;
         }
       } catch (error) {
         console.error("Ошибка загрузки скрипта:", error);
+        this.error = true;
       }
     },
   },
   async mounted() {
-    await this.loadPaymentScript(); // Загружаем скрипт при монтировании
+    if (!this.$route.query.user_id) {
+      this.error = true;
+      return;
+    }
+    await this.loadPaymentScript();
     await this.redirectPaymentPage();
   },
 };
