@@ -1,31 +1,21 @@
 <template>
-  <div>
-    <button @click="showPaymentWidget">Оплатить</button>
-  </div>
+<h3>Подождите...</h3>
 </template>
 
 <script>
-import { onMounted } from "vue";
+import epayService from "@/services/epay.service";
 
 export default {
   data() {
-    return {
-      isScriptLoaded: false, // Флаг загрузки скрипта
-    };
+    return {};
   },
   methods: {
-    loadPaymentScript() {
+    async loadPaymentScript() {
       return new Promise((resolve, reject) => {
-        if (this.isScriptLoaded) {
-          resolve();
-          return;
-        }
-
         const script = document.createElement("script");
         script.src = "https://epay.homebank.kz/payform/payment-api.js";
         script.async = true;
         script.onload = () => {
-          this.isScriptLoaded = true;
           resolve();
         };
         script.onerror = reject;
@@ -33,36 +23,40 @@ export default {
         document.body.appendChild(script);
       });
     },
-    async showPaymentWidget() {
+    async redirectPaymentPage() {
       try {
-        await this.loadPaymentScript(); // Загружаем скрипт, если он ещё не загружен
+        let user_id = this.$route.query.user_id;
+        let data = await epayService.getSaveCardToken(user_id);
+        const [lat, lon] = data.ip_info.loc.split(",");
+
         if (window.halyk) {
-          var createPaymentObject = function(auth, invoiceId, amount) {
+          var createPaymentObject = function (auth, invoiceId, amount) {
             var paymentObject = {
-              invoiceId: "11112222",
-              backLink: "http://localhost:8080/payment",
-              failureBackLink: "http://localhost:8080/payment",
+              invoiceId: data.invoice_id,
+              backLink: "https://abricoz.kz/payment",
+              failureBackLink: "https://abricoz.kz/payment",
               postLink: "https://api.abricoz.kz/api/epay/success",
               language: "rus",
               description: "Регистрация карты",
-              accountId: "testuser1",
-              terminal: "67e34d63-102f-4bd1-898e-370781d0074d",
+              accountId: data.invoice_id,
+              terminal: "661b56fc-f3cf-494b-bc8e-0108c484b4aa",
               amount: 0,
               currency: "USD",
               cardSave: true,
-              paymentType: "cardVerification"
+              paymentType: "cardVerification",
+              ip: data.ip_info.ip,
+              ipCountry: data.ip_info.country,
+              ipCity: data.ip_info.city,
+              ipRegion: data.ip_info.region,
+              ipDistrict: data.ip_info.city,
+              ipLatitude: lat,
+              ipLongitude: lon,
             };
             paymentObject.auth = auth;
             return paymentObject;
           };
 
-          window.halyk.cardverification(createPaymentObject({
-            "access_token": "ISPDSDK30IZJEXPOU0CB1R",
-            "expires_in": "1200",
-            "refresh_token": "",
-            "scope": "payment",
-            "token_type": "Bearer"
-          }, 11112222, 0)); // Вызов метода для отображения виджета
+          window.halyk.cardverification(createPaymentObject(data.token, data.invoice_id, 0));
         } else {
           console.error("Ошибка: halyk не определён");
         }
@@ -71,8 +65,9 @@ export default {
       }
     },
   },
-  mounted() {
-    this.loadPaymentScript(); // Загружаем скрипт при монтировании
+  async mounted() {
+    await this.loadPaymentScript(); // Загружаем скрипт при монтировании
+    await this.redirectPaymentPage();
   },
 };
 </script>
