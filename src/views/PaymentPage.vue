@@ -36,7 +36,7 @@ export default {
 
         if (window.halyk) {
           var createPaymentObject = function (auth, invoiceId, amount) {
-            return {
+            var paymentObject = {
               invoiceId: data.invoice_id,
               backLink: "https://abricoz.kz/payment",
               failureBackLink: "https://abricoz.kz/payment",
@@ -56,8 +56,10 @@ export default {
               ipDistrict: data.ip_info.city,
               ipLatitude: lat,
               ipLongitude: lon,
-              auth: auth,
             };
+
+            paymentObject.auth = auth;
+            return paymentObject;
           };
 
           window.halyk.cardverification(createPaymentObject(data.token, data.invoice_id, 0));
