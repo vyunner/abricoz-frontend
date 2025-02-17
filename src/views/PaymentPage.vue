@@ -40,7 +40,7 @@ export default {
               invoiceId: data.invoice_id,
               backLink: "https://abricoz.kz/success",
               failureBackLink: "https://abricoz.kz/failure",
-              postLink: "https://api.abricoz.kz/api/epay/success",
+              postLink: "https://api.abricoz.kz/api/epay/save-card-success",
               language: "rus",
               description: "Регистрация карты",
               accountId: data.invoice_id,
