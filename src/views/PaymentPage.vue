@@ -38,8 +38,8 @@ export default {
           var createPaymentObject = function (auth, invoiceId, amount) {
             var paymentObject = {
               invoiceId: data.invoice_id,
-              backLink: "https://abricoz.kz/payment",
-              failureBackLink: "https://abricoz.kz/payment",
+              backLink: "https://abricoz.kz/success",
+              failureBackLink: "https://abricoz.kz/failure",
               postLink: "https://api.abricoz.kz/api/epay/success",
               language: "rus",
               description: "Регистрация карты",
@@ -62,6 +62,7 @@ export default {
             return paymentObject;
           };
 
+          // console.log(createPaymentObject(data.token, data.invoice_id, 0));
           window.halyk.cardverification(createPaymentObject(data.token, data.invoice_id, 0));
         } else {
           console.error("Ошибка: halyk не определён");
