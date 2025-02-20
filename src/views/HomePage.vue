@@ -146,7 +146,7 @@ export default {
       <div class="lending-container">
 
         <div class="about-content">
-          <div class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</div>
+          <h1 class="about-content__title">Онлайн-супермаркет с бесплатной доставкой<br> в Актобе</h1>
 
           <div class="about-content__buttons">
             <a href="https://play.google.com/store/apps/details?id=com.abricoz.app&hl=ru" target="_blank">
