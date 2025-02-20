@@ -1,6 +1,8 @@
 <template>
-  <h3 v-if="error">Что-то пошло не так</h3>
-  <h3 v-else>Подождите...</h3>
+  <div class="container">
+    <h2 v-if="error">Что-то пошло не так</h2>
+    <h2 v-else>Загрузка...</h2>
+  </div>
 </template>
 
 <script>
@@ -84,3 +86,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Центрирует и по вертикали */
+  text-align: center;
+}
+</style>
