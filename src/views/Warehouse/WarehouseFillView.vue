@@ -166,7 +166,7 @@
             <InputNumber disabled v-model="editedProduct.price_with_discount"/>
           </div>
 
-          <div v-if="editedProduct.amount > 0" class="dialog__item">
+          <div class="dialog__item">
             <label>Активен?</label>
             <ToggleButton v-model="editedProduct.is_active" onLabel="Да" offLabel="Нет" true-value="1" false-value="0"/>
           </div>

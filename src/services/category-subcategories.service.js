@@ -3,7 +3,7 @@ import httpClient from "./http.service";
 const warehouseService = {
     async getCategory() {
         try {
-            const {status, data} = await httpClient.get(`/category/index`);
+            const {status, data} = await httpClient.get(`/warehouse/get-categories`);
             if (status === 200) {
                 return data.data;
             }
@@ -14,7 +14,7 @@ const warehouseService = {
     },
     async getSubCategory() {
         try {
-            const {status, data} = await httpClient.get(`/sub-category/index`);
+            const {status, data} = await httpClient.get(`/warehouse/get-subcategories`);
             if (status === 200) {
                 return data.data;
             }

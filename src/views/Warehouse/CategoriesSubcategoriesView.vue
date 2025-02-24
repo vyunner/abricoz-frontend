@@ -5,7 +5,7 @@ import categorySubcategoriesService from "@/services/category-subcategories.serv
 export default {
   name: "CategoriesSubcategoriesView",
   components: {PrimePreloader},
-  data(){
+  data() {
     return {
       preloaderLoading: true,
       loading: false,
@@ -25,9 +25,9 @@ export default {
     }
   },
   methods: {
-    add(data){
+    add(data) {
       this.categoryDialog.data = {}
-      if (data?.id){
+      if (data?.id) {
         this.categoryDialog.data = data
       }
       this.categoryDialog.visible = !this.categoryDialog.visible
@@ -36,7 +36,7 @@ export default {
     async tabChange() {
       this.loading = true
       this.tableData = []
-      if (this.activeTab === 0){
+      if (this.activeTab === 0) {
         const categories = await categorySubcategoriesService.getCategory();
         this.tableData = categories;
         this.categoryOptions = categories;
@@ -46,19 +46,20 @@ export default {
       this.loading = false
     },
 
-    onFileSelect(event){
-        this.activeTab === 1?
-            this.categoryDialog.data.image = event.files[0]
-            : this.categoryDialog.data.mobile_image = event.files[0]
+    onFileSelect(event) {
+      this.activeTab === 1 ?
+          this.categoryDialog.data.image = event.files[0]
+          : this.categoryDialog.data.mobile_image = event.files[0]
     },
 
-    async saveCreate(){
+    async saveCreate() {
       this.loading = true
-      if (this.categoryDialog.data.id){
+      if (this.categoryDialog.data.id) {
         let form = new FormData
         form.append('id', this.categoryDialog.data.id)
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
+        form.append('is_active', this.categoryDialog.data.is_active ? 1 : 0);
         if (this.activeTab === 1) {
           if (this.categoryDialog.data.image) {
             form.append('image', this.categoryDialog.data.image);
@@ -70,12 +71,12 @@ export default {
           }
         }
         let res
-        this.activeTab === 1? res = await categorySubcategoriesService.updateSubCategory(form)
+        this.activeTab === 1 ? res = await categorySubcategoriesService.updateSubCategory(form)
             : res = await categorySubcategoriesService.updateCategory(form)
 
         this.categoryDialog.visible = !this.categoryDialog.visible
         if (res) {
-          if (this.activeTab === 0){
+          if (this.activeTab === 0) {
             const categories = await categorySubcategoriesService.getCategory();
             this.tableData = categories;
             this.categoryOptions = categories;
@@ -100,6 +101,7 @@ export default {
         let form = new FormData
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
+        form.append('is_active', this.categoryDialog.data.is_active ? 1 : 0);
         if (this.activeTab === 1) {
           if (this.categoryDialog.data.image) {
             form.append('image', this.categoryDialog.data.image);
@@ -112,11 +114,11 @@ export default {
         }
 
         let res
-        this.activeTab === 1? res = await categorySubcategoriesService.createSubCategory(form)
+        this.activeTab === 1 ? res = await categorySubcategoriesService.createSubCategory(form)
             : res = await categorySubcategoriesService.createCategory(form)
         this.categoryDialog.visible = !this.categoryDialog.visible
         if (res) {
-          if (this.activeTab === 0){
+          if (this.activeTab === 0) {
             const categories = await categorySubcategoriesService.getCategory();
             this.tableData = categories;
             this.categoryOptions = categories;
@@ -126,14 +128,14 @@ export default {
           this.$toast.add({
             severity: "success",
             summary: "Успешно!",
-            detail: `${this.activeTab === 1? 'Подкатегория создана' : 'Категория создана'}`,
+            detail: `${this.activeTab === 1 ? 'Подкатегория создана' : 'Категория создана'}`,
             life: 3000
           });
         } else {
           this.$toast.add({
             severity: "error",
             summary: "Ошибка",
-            detail: `${this.activeTab === 1? 'Ошибка при создании подкатегории' : 'Ошибка при создании категории'}`,
+            detail: `${this.activeTab === 1 ? 'Ошибка при создании подкатегории' : 'Ошибка при создании категории'}`,
             life: 3000
           });
         }
@@ -142,12 +144,12 @@ export default {
       this.loading = false
     },
 
-    async onDelete(id){
+    async onDelete(id) {
       let res
-      this.activeTab === 1? res = await categorySubcategoriesService.deleteSubCategory(id)
+      this.activeTab === 1 ? res = await categorySubcategoriesService.deleteSubCategory(id)
           : res = await categorySubcategoriesService.deleteCategory(id)
       if (res) {
-        if (this.activeTab === 0){
+        if (this.activeTab === 0) {
           const categories = await categorySubcategoriesService.getCategory();
           this.tableData = categories;
           this.categoryOptions = categories;
@@ -157,20 +159,18 @@ export default {
         this.$toast.add({
           severity: "success",
           summary: "Успешно!",
-          detail: `${this.activeTab === 1? 'Подкатегория удалена' : 'Категория удалена'}`,
+          detail: `${this.activeTab === 1 ? 'Подкатегория удалена' : 'Категория удалена'}`,
           life: 3000
         });
       } else {
         this.$toast.add({
           severity: "error",
           summary: "Ошибка",
-          detail: `${this.activeTab === 1? 'Ошибка при удалении подкатегории' : 'Ошибка при удалении категории'}`,
+          detail: `${this.activeTab === 1 ? 'Ошибка при удалении подкатегории' : 'Ошибка при удалении категории'}`,
           life: 3000
         });
       }
     },
-
-
 
 
   },
@@ -208,7 +208,8 @@ export default {
       <PrimePreloader v-if="preloaderLoading"/>
 
       <div v-else>
-        <DataTable v-if="tableData.length" :value="tableData" class="dataTable" tableStyle="min-width: 50rem" showGridlines
+        <DataTable v-if="tableData.length" :value="tableData" class="dataTable" tableStyle="min-width: 50rem"
+                   showGridlines
                    stripedRows scrollable responsiveLayout="scroll" :loading="tableLoading" paginator :rows="10">
 
           <!-- Отображение полей продукта -->
@@ -221,14 +222,20 @@ export default {
           </Column>
           <Column field="name_ru" header="Название на русском"></Column>
           <Column field="name_kz" header="Название на казахском"></Column>
-          <Column v-if="activeTab === 1" field="category_id" header="Категория"></Column>
+          <Column header="Активен">
+            <template #body="{data}">
+              {{ data.is_active ? 'Да' : 'Нет' }}
+            </template>
+          </Column>
+          <Column v-if="activeTab === 1" field="category.name_ru" header="Категория"></Column>
 
           <!-- Кнопки действий -->
           <Column header="Действия">
             <template #body="{data}">
               <div class="button-group">
                 <Button label="Изменить" icon="pi pi-pencil" severity="warning" class="crud-button" @click="add(data)"/>
-                <Button label="Удалить" icon="pi pi-trash" severity="danger" class="crud-button" @click="onDelete(data.id)"/>
+                <Button label="Удалить" icon="pi pi-trash" severity="danger" class="crud-button"
+                        @click="onDelete(data.id)"/>
               </div>
             </template>
           </Column>
@@ -243,7 +250,7 @@ export default {
             :header="categoryDialog.data.id? (activeTab === 0? 'Редактировать категорию' : 'Редактировать подкатегорию')
             : (activeTab === 0? 'Создать категорию' : 'Создать подкатегорию')">
       <div class="dialog">
-<!--        <pre>{{ categoryDialog }}</pre>-->
+        <!--        <pre>{{ categoryDialog }}</pre>-->
         <div class="dialog__item">
           <label>Название (RU)</label>
           <InputText v-model="categoryDialog.data.name_ru"/>
@@ -261,6 +268,11 @@ export default {
                       @select="onFileSelect($event)" chooseLabel="Фото"/>
         </div>
 
+        <div class="dialog__item">
+          <label>Активен?</label>
+          <ToggleButton v-model="categoryDialog.data.is_active" onLabel="Вкл" offLabel="Выкл"/>
+        </div>
+
         <div v-if="activeTab === 1" class="dialog__item">
           <label for="subcategory">Категория</label>
           <Dropdown
@@ -273,7 +285,8 @@ export default {
           />
         </div>
 
-        <Button :label="categoryDialog.data.id? 'Сохранить' :'Создать'" :disabled="!isFormValid || loading" @click="saveCreate" :style="{margin: '10px 0 0 0'}"
+        <Button :label="categoryDialog.data.id? 'Сохранить' :'Создать'" :disabled="!isFormValid || loading"
+                @click="saveCreate" :style="{margin: '10px 0 0 0'}"
                 :loading="loading"/>
       </div>
     </Dialog>
@@ -288,19 +301,18 @@ export default {
   margin-top: 40px;
 }
 
-.create-button-section{
+.create-button-section {
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
-.dataTable{
+.dataTable {
   margin-top: 40px;
 }
 
-.crud-button{
+.crud-button {
   margin: 0.2rem 0.4rem;
 }
-
 
 
 .dialog__item {
