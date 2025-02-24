@@ -44,7 +44,7 @@
             <p class="text">Углеводы: {{ data.carbohydrates }}</p>
           </template>
         </Column>
-        <Column field="subcategory.name_ru" header="Подкатегория"></Column>
+        <Column v-if="activeTab===0" field="subcategory.name_ru" header="Подкатегория"></Column>
         <Column field="manufacturer" header="Производитель"></Column>
         <Column header="Цена">
           <template #body="{data}">
