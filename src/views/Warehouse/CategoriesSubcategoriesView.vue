@@ -16,7 +16,8 @@ export default {
       activeTab: 0,
       categoryDialog: {
         visible: false,
-        data: {},
+        data: {
+        },
       },
       tabMenuItems: [
         {label: 'Категории'},
@@ -60,6 +61,7 @@ export default {
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
         form.append('is_active', this.categoryDialog.data.is_active ? 1 : 0);
+        form.append('priority_number', this.categoryDialog.data.priority_number ?? 0);
         if (this.activeTab === 1) {
           if (this.categoryDialog.data.image) {
             form.append('image', this.categoryDialog.data.image);
@@ -102,6 +104,7 @@ export default {
         form.append('name_ru', this.categoryDialog.data.name_ru)
         form.append('name_kz', this.categoryDialog.data.name_kz)
         form.append('is_active', this.categoryDialog.data.is_active ? 1 : 0);
+        form.append('priority_number', this.categoryDialog.data.priority_number ?? 0);
         if (this.activeTab === 1) {
           if (this.categoryDialog.data.image) {
             form.append('image', this.categoryDialog.data.image);
@@ -214,6 +217,7 @@ export default {
 
           <!-- Отображение полей продукта -->
           <Column field="id" header="ID"></Column>
+          <Column field="priority_number" header="PN"></Column>
           <Column header="Фото">
             <template #body="{data}">
               <Image v-if="data.image_url && activeTab === 1" :src="data.image_url" width="100" preview/>
@@ -271,6 +275,11 @@ export default {
         <div class="dialog__item">
           <label>Активен?</label>
           <ToggleButton v-model="categoryDialog.data.is_active" onLabel="Вкл" offLabel="Выкл"/>
+        </div>
+
+        <div class="dialog__item">
+          <label>Приоритет</label>
+          <InputNumber v-model="categoryDialog.data.priority_number" :min="0" showButtons/>
         </div>
 
         <div v-if="activeTab === 1" class="dialog__item">
