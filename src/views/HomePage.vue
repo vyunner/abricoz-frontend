@@ -57,11 +57,14 @@ export default {
 <style scoped lang="scss">
 .container {
   display: flex;
-  justify-content: center; /* по горизонтали */
-  align-items: center;     /* по вертикали */
-  height: 100vh;           /* 100% высоты экрана */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   width: 100vw;
   text-align: center;
+  overflow: hidden; /* убрать возможный скролл */
+  padding: 16px;     /* чтобы элементы не прилипали к краям */
+  box-sizing: border-box;
 }
 
 .download-block {
@@ -69,18 +72,21 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  transform: translateY(-20px); // смещаем вверх на 10px
+  transform: translateY(-20px);
+  max-width: 100%;
 }
 
 h1 {
   margin: 0 0 10px 0;
+  font-size: 20px;
 }
 
-.app-store-img__phone, .google-play-img__phone {
-  width: 364px;
+.app-store-img__phone,
+.google-play-img__phone {
+  width: 100%;
+  max-width: 364px;
   height: 55px;
   display: block;
   cursor: pointer;
 }
-
 </style>
