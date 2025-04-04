@@ -1,5 +1,7 @@
 <script>
 
+import adsService from "@/services/ads.service";
+
 export default {
   name: "HomePage",
   components: {},
@@ -17,12 +19,23 @@ export default {
       window.location.href = "https://apps.apple.com/app/id6670238244";
     },
   },
-  mounted() {
+  async mounted() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
     if (/android/i.test(userAgent)) {
       this.isAndroid = true;
     } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       this.isiOS = true;
+    }
+
+    const adsParam = this.$route.query.ads;
+
+    if (adsParam && !localStorage.getItem("click")) {
+      let adsData = {'ads': adsParam}
+      const success = await adsService.click(adsData);
+      if (success) {
+        localStorage.setItem("click", adsParam);
+      }
     }
   },
 };
@@ -41,6 +54,12 @@ export default {
         <img @click="downloadiOS" class="app-store-img__phone"
              src="@/assets/images/app-store-phone.png"
              alt=""/>
+        <h1>Instagram:</h1>
+        <a href="https://www.instagram.com/abricoz_kz">
+          <img class="app-store-img__phone"
+               src="@/assets/images/instagrambutton.png"
+               alt=""/>
+        </a>
       </div>
       <div v-else>
         <h1>Скачать приложение</h1>
@@ -48,6 +67,10 @@ export default {
              src="@/assets/images/google-play-phone.png" alt=""/>
         <img @click="downloadiOS" class="app-store-img__phone"
              src="@/assets/images/app-store-phone.png"
+             alt=""/>
+        <h1>Instagram:</h1>
+        <img class="app-store-img__phone"
+             src="@/assets/images/instagrambutton.png"
              alt=""/>
       </div>
     </div>
@@ -63,7 +86,7 @@ export default {
   width: 100vw;
   text-align: center;
   overflow: hidden; /* убрать возможный скролл */
-  padding: 16px;     /* чтобы элементы не прилипали к краям */
+  padding: 16px; /* чтобы элементы не прилипали к краям */
   box-sizing: border-box;
 }
 
@@ -77,7 +100,7 @@ export default {
 }
 
 h1 {
-  margin: 0 0 10px 0;
+  margin: 10px 0 8px 0;
   font-size: 20px;
 }
 
