@@ -34,6 +34,7 @@ import ToggleButton from 'primevue/togglebutton';
 import TextArea from 'primevue/textarea';
 import FileUpload from 'primevue/fileupload';
 import ProgressSpinner from 'primevue/progressspinner';
+import InputSwitch from 'primevue/inputswitch';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -61,7 +62,7 @@ app.component('InputIcon', InputIcon)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
 app.component('InputMask', InputMask)
-app.component('TextArea', TextArea)
+app.component('Textarea', TextArea)
 app.component('Checkbox', Checkbox)
 app.component('Dropdown', Dropdown)
 app.component('Toast', Toast)
@@ -76,5 +77,6 @@ app.component('AutoComplete', AutoComplete)
 app.component('ToggleButton', ToggleButton)
 app.component('FileUpload', FileUpload)
 app.component('ProgressSpinner', ProgressSpinner)
+app.component('InputSwitch', InputSwitch)
 
 app.mount('#app');

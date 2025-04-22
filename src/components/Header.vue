@@ -105,6 +105,19 @@ export default {
             },
           ]
         },
+        {
+          label: 'POS',
+          icon: 'pi pi-file',
+          items: [
+            {
+              label: 'Поиск',
+              command: () => {
+                this.$router.push('/admin/pos/search');
+                this.menuVisible = false;
+              }
+            },
+          ]
+        },
       ];
     }
   },

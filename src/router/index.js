@@ -53,6 +53,11 @@ const routes = [
                     name: 'warehouse/categories-subcategories',
                     component: () => import('@/views/Warehouse/CategoriesSubcategoriesView.vue'),
                 },
+                {
+                    path: 'pos/search',
+                    name: 'pos/search',
+                    component: () => import('@/views/Pos/PosSearchView.vue'),
+                },
             ]
     },
     {
