@@ -18,6 +18,11 @@ const routes = [
         component: () => import('@/views/PaymentPage.vue'),
     },
     {
+        path: '/contacts',
+        name: 'contacts',
+        component: () => import('@/views/ContactsPage.vue'),
+    },
+    {
         path: '/admin',
         name: 'admin',
         component: AdminView,
