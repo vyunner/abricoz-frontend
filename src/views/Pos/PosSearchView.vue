@@ -32,7 +32,7 @@
             @click="selectProduct(prod)"
         >
           <Image v-if="prod.photo_url" :src="prod.photo_url" width="100"/>
-          <div class="product-name">{{ prod.name_ru }}</div>
+          <div class="product-name">{{ prod.name_ru }} {{ prod.weight}}</div>
         </div>
       </div>
 
@@ -55,6 +55,10 @@
     <!-- Диалог: редактировать -->
     <Dialog header="Редактировать товар" v-model:visible="editProductDialog" modal :style="{ width: '600px' }">
       <div v-if="product">
+        <div class="field">
+          <label>ID</label>
+          <InputNumber v-model="product.id" disabled />
+        </div>
         <div class="field" v-for="field in editableFields" :key="field.label">
           <label>{{ field.label }}</label>
           <component :is="field.type" v-model="product[field.model]" v-bind="field.props" />
