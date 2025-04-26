@@ -53,7 +53,7 @@
     </Dialog>
 
     <Dialog header="Товар не найден" v-model:visible="productNotFoundDialog" modal>
-      <p>Товар не найден. Создать товар с этим штрихкодом?</p>
+      <p style="margin: 0;">Создать товар с этим штрихкодом?</p>
       <template #footer>
         <Button label="Нет" icon="pi pi-times" @click="productNotFoundDialog = false" />
         <Button label="Да" icon="pi pi-check" @click="openCreateProductDialog" />
@@ -72,8 +72,15 @@
         </div>
 
         <div v-if="!product?.photo_url" class="field">
-          <label>Загрузить фото товара</label>
-          <input type="file" @change="handleImageUpload" accept="image/*" />
+          <label style="margin-bottom: 10px;">Загрузить фото товара</label>
+          <FileUpload
+              mode="basic"
+              name="photo"
+              accept="image/*"
+              chooseLabel="Выбрать фото"
+              :customUpload="true"
+              @select="handleFileAutoUpload"
+          />
         </div>
 
         <div v-else>
@@ -173,6 +180,21 @@
           </div>
         </div>
       </div>
+
+      <div class="field" v-for="field in priceFields" :key="field.label">
+        <label>{{ field.label }}</label>
+        <InputNumber v-model="product[field.model]" />
+      </div>
+
+      <div class="field__change-row" style="justify-content: flex-end">
+        <Button
+            label="Изменить цены"
+            icon="pi pi-check"
+            severity="info"
+            @click="changePrices"
+            :disabled="loadingChange"
+        />
+      </div>
     </Dialog>
 
     <Toast position="bottom-right" />
@@ -204,6 +226,12 @@ export default {
       isLoadingPhoto: false,
       subcategories: [],
       toast: null,
+      priceFields: [
+        { label: "Цена", model: "price" },
+        { label: "Скидка (%)", model: "discount" },
+        { label: "Цена со скидкой", model: "price_with_discount" },
+        { label: "Закупочная цена", model: "price_cost" },
+      ],
       editableFields: [
         { label: "Штрихкод", model: "barcode", type: "InputText" },
         { label: "Название (RU)", model: "name_ru", type: "InputText" },
@@ -236,6 +264,26 @@ export default {
     });
   },
   methods: {
+    async changePrices() {
+      if (!this.product?.id || this.loadingChange) return;
+      this.loadingChange = true;
+      const { price, discount, price_with_discount, price_cost } = this.product;
+      try {
+        const updated = await posService.changeProductAmount({
+          product_id: this.product.id,
+          price,
+          discount,
+          price_with_discount,
+          price_cost,
+        });
+        this.product = updated;
+        this.toast.add({ severity: "success", summary: "Цены обновлены", detail: "Цены успешно обновлены", life: 3000 });
+      } catch (e) {
+        this.toast.add({ severity: "error", summary: "Ошибка", detail: "Не удалось обновить цены", life: 3000 });
+      } finally {
+        this.loadingChange = false;
+      }
+    },
     async loadSubcategories() {
       try {
         this.subcategories = await posService.getSubcategories();
@@ -309,8 +357,8 @@ export default {
       this.createProductDialog = true;
       this.product = null;
     },
-    async handleImageUpload(event) {
-      const file = event.target.files[0];
+    async handleFileAutoUpload(event) {
+      const file = event.files?.[0];
       if (!file) return;
 
       const formData = new FormData();
