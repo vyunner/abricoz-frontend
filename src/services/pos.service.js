@@ -40,6 +40,26 @@ const posService = {
             throw e;
         }
     },
+
+    async uploadProductPhoto(formData) {
+        try {
+            const response = await httpClient.post('/pos/upload-product-photo', formData);
+            return response.data;
+        } catch (e) {
+            console.error("Ошибка загрузки фото:", e);
+            throw e;
+        }
+    },
+
+    async createProduct(formData) {
+        try {
+            const response = await httpClient.post('/pos/create-product', formData);
+            return response.data;
+        } catch (e) {
+            console.error("Ошибка загрузки фото:", e);
+            throw e;
+        }
+    },
 };
 
 export default posService;
