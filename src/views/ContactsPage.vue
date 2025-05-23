@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     openWhatsApp() {
-      const phone = '+77770404499';
+      const phone = '+77026207447';
       const isMobile = /iPhone|Android|iPad|iPod/i.test(navigator.userAgent);
       const url = isMobile
           ? `https://wa.me/${phone.replace('+', '')}`
